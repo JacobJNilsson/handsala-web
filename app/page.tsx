@@ -1,21 +1,20 @@
-
 export default async function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section id="home" className="h-screen flex items-center justify-center bg-cornflowerBlue z-n1">
+      <section id="home" className="min-h-screen flex items-center justify-center bg-cornflowerBlue z-n1">
         <div className="noise absolute z-0"/>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center z-1">
-            <blockquote className="text-8xl font-bold text-white mb-8 mt-8 lora-regular">
+            <blockquote className="text-4xl sm:text-6xl md:text-8xl font-bold text-white mb-4 sm:mb-8 mt-4 sm:mt-8 lora-regular">
               &ldquo;Handsala:  <br />
-              (að), v. to make over (confirm) by shaking hands.&rdquo;
+              <span className="text-3xl sm:text-5xl md:text-7xl">(að), v. to make over (confirm) by shaking hands.&rdquo;</span>
               <br />
-              <span className="text-xl">- A Concise Dictionary of Old Icelandic (Geir Zoëga)</span>
+              <span className="text-base sm:text-lg md:text-xl block mt-4">- A Concise Dictionary of Old Icelandic (Geir Zoëga)</span>
             </blockquote>
 
-            <div className="bg-white backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-blue hover:shadow-2xl transition-shadow duration-300">
-              <p className="text-beige-800 leading-relaxed text-lg">
+            <div className="bg-white backdrop-blur-sm rounded-2xl p-4 sm:p-8 shadow-lg border border-blue hover:shadow-2xl transition-shadow duration-300 mt-8">
+              <p className="text-beige-800 leading-relaxed text-base sm:text-lg">
                 At Handsala AB, we partner with clients to implement innovative solutions that deliver real value. We build strong relationships based on trust and collaboration, tailoring each solution to meet unique client needs. Our goal is to empower businesses with technology that enhances operations and supports growth.
               </p>
             </div>
@@ -25,18 +24,18 @@ export default async function HomePage() {
       <div className="w-full h-8 bg-repeat-x" style={{ backgroundImage: "url('/curved-line.svg')", backgroundSize: "64px 64px", padding: "0", margin: "0", position: "relative", top: "-1px" }}></div>
 
       {/* Products Section */}
-      <section id="products" className="h-screen flex items-center justify-center bg-beige-50 z-2">
+      <section id="products" className="min-h-screen py-16 flex items-center justify-center bg-beige-50 z-2">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-cornflowerBlue mb-4 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-cornflowerBlue mb-4 text-center">
             Our Portfolio
           </h2>
-          <p className="text-xl text-beige-800 mb-12 text-center max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-beige-800 mb-8 sm:mb-12 text-center max-w-2xl mx-auto">
             Innovative solutions crafted with trust and precision
           </p>
 
           <div className="bg-white/50 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-orangeRed hover:shadow-2xl transition-shadow duration-300">
             <div className="md:grid md:grid-cols-2">
-              <div className="relative h-64 md:h-full bg-beige-100">
+              <div className="relative h-48 sm:h-64 md:h-full bg-beige-100">
                 <div className="absolute inset-0 flex items-center justify-center text-beige-400">
                   [Project Screenshot]
                 </div>
