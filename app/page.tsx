@@ -38,24 +38,27 @@ export default async function HomePage() {
           <div className="bg-white/50 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-orangeRed hover:shadow-2xl transition-shadow duration-300">
             <div className="md:grid md:grid-cols-2">
               <div className="relative h-48 sm:h-64 md:h-full bg-beige-100">
-                <div className="absolute inset-0 flex items-center justify-center text-beige-400">
-                  [Project Screenshot]
-                </div>
+                <img
+                  src="/palette-filled-game.png"
+                  alt="Screenshot of Pallet game showing filled puzzle state"
+                  className="object-cover object-center w-full h-full"
+                />
               </div>
 
               <div className="p-8">
                 <div className="mb-2">
                   <span className="inline-block bg-coral text-white text-sm font-medium px-3 py-1 rounded-full">
-                    Mobile Game
+                    Puzzle Game
                   </span>
                 </div>
                 <h3 className="text-2xl font-semibold text-cornflowerBlue mb-4">
-                  Project Name
+                  Palette
                 </h3>
                 <p className="text-beige-800 mb-6 leading-relaxed">
-                  An engaging mobile game that combines strategy and skill. Players navigate through
-                  challenging levels while solving puzzles and collecting rewards. Built with Unity
-                  and featuring stunning graphics and smooth gameplay mechanics.
+                  A unique puzzle game that combines elements of Sudoku with an innovative twist on area constraints.
+                  Each puzzle features randomly generated areas and color-based gameplay, making every level both
+                  visually appealing and intellectually challenging. Built with Flutter for cross-platform compatibility
+                  and featuring sophisticated algorithms for puzzle generation and solving.
                 </p>
                 <div className="space-y-4">
                   <div>
@@ -63,9 +66,9 @@ export default async function HomePage() {
                       Key Features
                     </h4>
                     <ul className="list-disc list-inside text-beige-800 space-y-1">
-                      <li>Real-time multiplayer battles</li>
-                      <li>Progressive skill system</li>
-                      <li>Cross-platform cloud saves</li>
+                      <li>Daily puzzles with unique solutions</li>
+                      <li>Multiple grid sizes and difficulty levels</li>
+                      <li>Cross-platform support (iOS, Android, Web)</li>
                     </ul>
                   </div>
                   <div>
@@ -74,13 +77,13 @@ export default async function HomePage() {
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       <span className="bg-beige-100 text-orangeRed px-3 py-1 rounded-full text-sm">
-                        Unity
+                        Flutter
                       </span>
                       <span className="bg-beige-100 text-cornflowerBlue px-3 py-1 rounded-full text-sm">
-                        C#
+                        Dart
                       </span>
                       <span className="bg-beige-100 text-cornflowerBlue px-3 py-1 rounded-full text-sm">
-                        Firebase
+                        Dancing Links
                       </span>
                     </div>
                   </div>
