@@ -13,7 +13,7 @@ html {
 }
 
 .lora-regular {
-  font-family: "Lora", serif;
+  font-family: var(--font-lora);
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -42,4 +42,9 @@ html {
 .content {
   position: relative;
   z-index: 1;
+}
+
+/* Add this class if you need Poiret One font */
+.poiret-one {
+  font-family: var(--font-poiret-one);
 }
