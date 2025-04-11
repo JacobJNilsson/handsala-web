@@ -1,6 +1,7 @@
 import "./globals.css"
 import { NavMenu } from "@/components/ui/nav-menu"
 import { Lora, Poiret_One } from 'next/font/google'
+import Script from 'next/script'
 
 const lora = Lora({
   subsets: ['latin'],
@@ -21,21 +22,7 @@ export const metadata = {
   icons: {
     icon: [
       { url: '/favicon.ico' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png' },
-    ],
-    other: [
-      {
-        rel: 'android-chrome-192x192',
-        url: '/android-chrome-192x192.png',
-      },
-      {
-        rel: 'android-chrome-512x512',
-        url: '/android-chrome-512x512.png',
-      },
+      { url: '/favicon-dark.ico' },
     ],
   },
 }
@@ -47,6 +34,35 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" className={`${lora.variable} ${poiretOne.variable}`}>
+      <head>
+        <Script id="dark-mode-favicon" strategy="afterInteractive">
+          {`
+            // Function to change favicon based on dark mode
+            function updateFavicon() {
+              const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+              const faviconLinks = document.querySelectorAll('link[rel="icon"]');
+
+              // If in dark mode, use the white background favicon
+              if (darkModeMediaQuery.matches) {
+                faviconLinks.forEach(link => {
+                  link.setAttribute('href', '/favicon-dark.ico');
+                });
+              } else {
+                // Restore default favicon in light mode
+                faviconLinks.forEach(link => {
+                  link.setAttribute('href', '/favicon.ico');
+                });
+              }
+            }
+
+            // Run once on page load
+            updateFavicon();
+
+            // Listen for changes in color scheme preference
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
+          `}
+        </Script>
+      </head>
       <body>
         <div className="content">
           <NavMenu />
