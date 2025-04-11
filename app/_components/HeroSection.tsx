@@ -14,7 +14,7 @@ export default function HeroSection() {
 
             <div className="bg-white backdrop-blur-sm rounded-2xl p-4 sm:p-8 shadow-lg border border-blue hover:shadow-2xl transition-shadow duration-300 mt-8">
               <p className="text-beige-800 leading-relaxed text-base sm:text-lg">
-                At Handsala AB, we partner with clients to implement innovative solutions that deliver real value. We build strong relationships based on trust and collaboration, tailoring each solution to meet unique client needs. Our goal is to empower businesses with technology that enhances operations and supports growth.
+                Hey! I&apos;m Jacob, a developer who loves discovering and playing with new tech. When I&apos;m not coding at city cafes, I&apos;m probably visiting my parents to work on their house in the woods. I geek out over all kinds of design—from architecture to products to code structure. My happy place? Tinkering with projects like innovative flat speakers or building AI workflows. Wanna collaborate on something awesome? Let&apos;s chat!
               </p>
             </div>
           </div>
