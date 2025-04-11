@@ -2,10 +2,13 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { usePathname } from "next/navigation"
 
 export function NavMenu() {
   const [scrolled, setScrolled] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+  const isHomePage = pathname === "/"
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +19,11 @@ export function NavMenu() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Create links that point to sections on the home page
+  const getHomeLink = (section: string) => {
+    return isHomePage ? `#${section}` : `/#${section}`
+  }
 
   return (
     <nav
@@ -28,7 +36,7 @@ export function NavMenu() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link
-            href="#home"
+            href={getHomeLink("home")}
             className={`text-xl sm:text-2xl font-bold transition-all duration-300 poiret-one-regular ${
               scrolled ? "text-beige-50" : "text-beige-50"
             } hover:opacity-80`}
@@ -61,7 +69,7 @@ export function NavMenu() {
           {/* Desktop menu */}
           <div className="hidden md:flex space-x-8">
             <Link
-              href="#products"
+              href={getHomeLink("products")}
               className={`text-lg transition-all duration-300 py-1 ${
                 scrolled
                   ? "text-beige-50 hover:text-beige-200 border-b-2 border-transparent hover:border-beige-50"
@@ -71,7 +79,17 @@ export function NavMenu() {
               Products
             </Link>
             <Link
-              href="#contact"
+              href="/blog"
+              className={`text-lg transition-all duration-300 py-1 ${
+                scrolled
+                  ? "text-beige-50 hover:text-beige-200 border-b-2 border-transparent hover:border-beige-50"
+                  : "text-beige-50 hover:text-beige-200 border-b-2 border-transparent hover:border-beige-50"
+              }`}
+            >
+              Blog
+            </Link>
+            <Link
+              href={getHomeLink("contact")}
               className={`text-lg transition-all duration-300 py-1 ${
                 scrolled
                   ? "text-beige-50 hover:text-beige-200 border-b-2 border-transparent hover:border-beige-50"
@@ -88,14 +106,21 @@ export function NavMenu() {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-cornflowerBlue shadow-lg rounded-b-lg">
               <Link
-                href="#products"
+                href={getHomeLink("products")}
                 className="block px-3 py-2 text-base font-medium text-beige-50 hover:text-beige-200 hover:bg-cornflowerBlue/80 rounded-md"
                 onClick={() => setIsOpen(false)}
               >
                 Products
               </Link>
               <Link
-                href="#contact"
+                href="/blog"
+                className="block px-3 py-2 text-base font-medium text-beige-50 hover:text-beige-200 hover:bg-cornflowerBlue/80 rounded-md"
+                onClick={() => setIsOpen(false)}
+              >
+                Blog
+              </Link>
+              <Link
+                href={getHomeLink("contact")}
                 className="block px-3 py-2 text-base font-medium text-beige-50 hover:text-beige-200 hover:bg-cornflowerBlue/80 rounded-md"
                 onClick={() => setIsOpen(false)}
               >
