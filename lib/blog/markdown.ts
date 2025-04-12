@@ -24,6 +24,13 @@ export type BlogPost = {
  * Get all blog posts, sorted by date
  */
 export async function getAllPosts(): Promise<BlogPost[]> {
+  return getAllPostsSync();
+}
+
+/**
+ * Synchronous version of getAllPosts for static export
+ */
+export function getAllPostsSync(): BlogPost[] {
   // Check if the directory exists
   if (!fs.existsSync(POSTS_DIRECTORY)) {
     return [];
@@ -85,7 +92,14 @@ export async function getAllPosts(): Promise<BlogPost[]> {
  * Get a specific blog post by slug
  */
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const posts = await getAllPosts();
+  return getPostBySlugSync(slug);
+}
+
+/**
+ * Synchronous version of getPostBySlug for static export
+ */
+export function getPostBySlugSync(slug: string): BlogPost | null {
+  const posts = getAllPostsSync();
   const post = posts.find((post) => post.slug === slug);
 
   if (!post) {
