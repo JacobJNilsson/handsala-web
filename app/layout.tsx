@@ -1,7 +1,7 @@
 import "./globals.css"
 import { NavMenu } from "@/components/ui/nav-menu"
 import { Lora, Poiret_One } from 'next/font/google'
-import Script from 'next/script'
+import { Metadata } from 'next/types'
 
 const lora = Lora({
   subsets: ['latin'],
@@ -16,15 +16,21 @@ const poiretOne = Poiret_One({
   variable: '--font-poiret-one',
 })
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Handsala AB",
   description: "Built on trust, honor, and mutual respect",
-  icons: {
-    icon: [
-      { url: '/favicon.ico' },
-      { url: '/favicon-dark.ico' },
-    ],
-  },
+  icons: [
+    {
+      rel: 'icon',
+      url: '/favicon.ico',
+      media: '(prefers-color-scheme: light)',
+    },
+    {
+      rel: 'icon',
+      url: '/favicon-dark.ico',
+      media: '(prefers-color-scheme: dark)',
+    },
+  ],
 }
 
 export default async function RootLayout({
@@ -34,35 +40,6 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" className={`${lora.variable} ${poiretOne.variable}`}>
-      <head>
-        <Script id="dark-mode-favicon" strategy="afterInteractive">
-          {`
-            // Function to change favicon based on dark mode
-            function updateFavicon() {
-              const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-              const faviconLinks = document.querySelectorAll('link[rel="icon"]');
-
-              // If in dark mode, use the white background favicon
-              if (darkModeMediaQuery.matches) {
-                faviconLinks.forEach(link => {
-                  link.setAttribute('href', '/favicon-dark.ico');
-                });
-              } else {
-                // Restore default favicon in light mode
-                faviconLinks.forEach(link => {
-                  link.setAttribute('href', '/favicon.ico');
-                });
-              }
-            }
-
-            // Run once on page load
-            updateFavicon();
-
-            // Listen for changes in color scheme preference
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateFavicon);
-          `}
-        </Script>
-      </head>
       <body>
         <div className="content">
           <NavMenu />
