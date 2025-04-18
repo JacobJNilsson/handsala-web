@@ -10,6 +10,13 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #6495ED; /* cornflowerBlue */
+}
+
+body {
+  background-color: #6495ED; /* cornflowerBlue */
+  font-family: "Lora", serif;
+  color: beige-800;
 }
 
 .lora-regular {

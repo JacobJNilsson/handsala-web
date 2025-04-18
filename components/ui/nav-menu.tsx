@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
-import TransitionLink from "@/components/ui/transition/TransitionLink"
 
 export function NavMenu() {
   const [scrolled, setScrolled] = useState(false)
@@ -36,14 +35,14 @@ export function NavMenu() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <TransitionLink
+          <Link
             href={getHomeLink("home")}
             className={`text-xl sm:text-2xl font-bold transition-all duration-300 poiret-one-regular ${
               scrolled ? "text-beige-50" : "text-beige-50"
             } hover:opacity-80`}
           >
             Handsala
-          </TransitionLink>
+          </Link>
 
           {/* Mobile menu button */}
           <button
@@ -69,7 +68,7 @@ export function NavMenu() {
 
           {/* Desktop menu */}
           <div className="hidden md:flex space-x-8">
-            <TransitionLink
+            <Link
               href={getHomeLink("products")}
               className={`text-lg transition-all duration-300 py-1 ${
                 scrolled
@@ -78,8 +77,8 @@ export function NavMenu() {
               }`}
             >
               Products
-            </TransitionLink>
-            <TransitionLink
+            </Link>
+            <Link
               href="/blog"
               className={`text-lg transition-all duration-300 py-1 ${
                 scrolled
@@ -88,8 +87,8 @@ export function NavMenu() {
               }`}
             >
               Blog
-            </TransitionLink>
-            <TransitionLink
+            </Link>
+            <Link
               href={getHomeLink("contact")}
               className={`text-lg transition-all duration-300 py-1 ${
                 scrolled
@@ -98,7 +97,7 @@ export function NavMenu() {
               }`}
             >
               Contact
-            </TransitionLink>
+            </Link>
           </div>
         </div>
 
@@ -113,20 +112,20 @@ export function NavMenu() {
               >
                 Products
               </Link>
-              <TransitionLink
+              <Link
                 href="/blog"
                 className="block px-3 py-2 text-base font-medium text-beige-50 hover:text-beige-200 hover:bg-cornflowerBlue/80 rounded-md"
                 onClick={() => setIsOpen(false)}
               >
                 Blog
-              </TransitionLink>
-              <TransitionLink
+              </Link>
+              <Link
                 href={getHomeLink("contact")}
                 className="block px-3 py-2 text-base font-medium text-beige-50 hover:text-beige-200 hover:bg-cornflowerBlue/80 rounded-md"
                 onClick={() => setIsOpen(false)}
               >
                 Contact
-              </TransitionLink>
+              </Link>
             </div>
           </div>
         )}

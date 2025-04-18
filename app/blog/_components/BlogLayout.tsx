@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import { type BlogPost } from '@/lib/blog/markdown';
 import { useMemo } from 'react';
-import TransitionLink from '../../../components/ui/transition/TransitionLink';
+import Link from 'next/link';
 
 interface BlogLayoutProps {
   children: React.ReactNode;
@@ -87,7 +87,7 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
                           <ul className="space-y-2 pl-2">
                             {categorizedPosts[category].map(post => (
                               <li key={post.slug} className="text-sm">
-                                <TransitionLink
+                                <Link
                                   href={`/blog/${post.slug}`}
                                   className={`block hover:bg-beige-100 p-2 rounded-lg transition-colors ${
                                     currentSlug === post.slug ? 'bg-beige-100 font-semibold' : ''
@@ -95,7 +95,7 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
                                 >
                                   <span className="block text-xs text-beige-600">{post.date}</span>
                                   <span className="font-medium">{post.title}</span>
-                                </TransitionLink>
+                                </Link>
                               </li>
                             ))}
                           </ul>
@@ -112,7 +112,7 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
                     <ul className="space-y-2">
                       {posts.map(post => (
                         <li key={post.slug}>
-                          <TransitionLink
+                          <Link
                             href={`/blog/${post.slug}`}
                             className={`block hover:bg-beige-100 p-2 rounded-lg transition-colors ${
                               currentSlug === post.slug ? 'bg-beige-100 font-semibold' : ''
@@ -120,7 +120,7 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
                           >
                             <span className="block text-sm text-beige-600">{post.date}</span>
                             <span className="font-medium">{post.title}</span>
-                          </TransitionLink>
+                          </Link>
                         </li>
                       ))}
                     </ul>
@@ -129,23 +129,23 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
 
                 {!isRootBlogPage && (
                   <div className="mt-6">
-                    <TransitionLink
+                    <Link
                       href="/blog"
                       className="text-cornflowerBlue hover:underline inline-flex items-center gap-1"
                     >
                       ← Back to all posts
-                    </TransitionLink>
+                    </Link>
                   </div>
                 )}
 
                 {/* Home link with transition */}
                 <div className="mt-6 pt-4 border-t border-beige-200">
-                  <TransitionLink
+                  <Link
                     href="/"
                     className="text-cornflowerBlue hover:text-cornflowerBlue/80 hover:underline inline-flex items-center gap-1"
                   >
                     ← Back to Home
-                  </TransitionLink>
+                  </Link>
                 </div>
               </div>
             </aside>

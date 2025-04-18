@@ -2,6 +2,8 @@ import "./globals.css"
 import { NavMenu } from "@/components/ui/nav-menu"
 import { Lora, Poiret_One } from 'next/font/google'
 import { Metadata } from 'next/types'
+import LoadingIndicator from "@/components/ui/loading-indicator"
+import { Suspense } from "react"
 
 const lora = Lora({
   subsets: ['latin'],
@@ -43,6 +45,9 @@ export default async function RootLayout({
       <body>
         <div className="content">
           <NavMenu />
+          <Suspense fallback={null}>
+            <LoadingIndicator />
+          </Suspense>
           {children}
         </div>
       </body>
