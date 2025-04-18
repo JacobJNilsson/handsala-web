@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { usePathname } from "next/navigation"
+import { motion, AnimatePresence } from "framer-motion"
 
 export function NavMenu() {
   const [scrolled, setScrolled] = useState(false)
@@ -47,7 +48,8 @@ export function NavMenu() {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-beige-50 hover:text-beige-200 focus:outline-none"
+            className="md:hidden text-beige-50 hover:text-beige-200 focus:outline-none p-2 rounded-full hover:bg-cornflowerBlue/30 transition-colors"
+            aria-label="Toggle menu"
           >
             <svg
               className="h-6 w-6"
@@ -102,33 +104,41 @@ export function NavMenu() {
         </div>
 
         {/* Mobile menu panel */}
-        {isOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-cornflowerBlue shadow-lg rounded-b-lg">
-              <Link
-                href={getHomeLink("products")}
-                className="block px-3 py-2 text-base font-medium text-beige-50 hover:text-beige-200 hover:bg-cornflowerBlue/80 rounded-md"
-                onClick={() => setIsOpen(false)}
-              >
-                Products
-              </Link>
-              <Link
-                href="/blog"
-                className="block px-3 py-2 text-base font-medium text-beige-50 hover:text-beige-200 hover:bg-cornflowerBlue/80 rounded-md"
-                onClick={() => setIsOpen(false)}
-              >
-                Blog
-              </Link>
-              <Link
-                href={getHomeLink("contact")}
-                className="block px-3 py-2 text-base font-medium text-beige-50 hover:text-beige-200 hover:bg-cornflowerBlue/80 rounded-md"
-                onClick={() => setIsOpen(false)}
-              >
-                Contact
-              </Link>
-            </div>
-          </div>
-        )}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              className="md:hidden overflow-hidden"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <div className="px-2 pt-2 pb-3 space-y-1 bg-cornflowerBlue/90 backdrop-blur-sm shadow-lg rounded-2xl border border-cornflowerBlue/30 mt-2">
+                <Link
+                  href={getHomeLink("products")}
+                  className="block px-4 py-3 text-base font-medium text-beige-50 hover:text-white hover:bg-cornflowerBlue/80 rounded-xl transition-all duration-200"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Products
+                </Link>
+                <Link
+                  href="/blog"
+                  className="block px-4 py-3 text-base font-medium text-beige-50 hover:text-white hover:bg-cornflowerBlue/80 rounded-xl transition-all duration-200"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Blog
+                </Link>
+                <Link
+                  href={getHomeLink("contact")}
+                  className="block px-4 py-3 text-base font-medium text-beige-50 hover:text-white hover:bg-cornflowerBlue/80 rounded-xl transition-all duration-200"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Contact
+                </Link>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   )
