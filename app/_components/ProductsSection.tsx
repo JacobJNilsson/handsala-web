@@ -23,7 +23,7 @@ export default function ProductsSection() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="text-3xl sm:text-4xl font-bold text-cornflowerBlue mb-4 text-center">
-            Cool Stuff I&apos;ve Built
+            Stuff I&apos;ve Built
           </h2>
           <p className="text-lg sm:text-xl text-beige-800 mb-8 sm:mb-12 text-center max-w-2xl mx-auto">
             Projects that kept me up at night (in a good way)
