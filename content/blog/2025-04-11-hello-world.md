@@ -13,7 +13,7 @@ Hey there! I'm Jacob,
 
 This blog is a place to talk about my progress, wins, and failures. But it will also be a place for me to vent my thoughts. I'll discuss everything from design to ai to building products.
 
-I wanted a space where I could formulate my thoughts and show my progress. It's about accountability - creating a record of my work that motivates me to continue building rather than abandoning projects. When you share your journey publicly, it becomes harder to just quit.
+I wanted a space where I could formulate my thoughts and show my progress. It's about accountability, creating a record of my work that motivates me to continue building rather than abandoning projects. When you share your journey publicly, it becomes harder to just quit.
 
 ## Current Projects
 
