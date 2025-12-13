@@ -17,7 +17,7 @@ I wanted a space where I could formulate my thoughts and show my progress. It's 
 
 ## Current Projects
 
-My main focus right now is [TMBuddy](https://tmbuddy.org), a SaaS project for merch designers and sellers. It helps them check their text designs for potential trademark infringement on existing trademarks. This is a significant issue in the merch selling community, as it's easy to receive strikes without understanding why. Just two or three strikes can result in losing a substantial portion, if not all, of your income.
+My main focus right now is TMBuddy, a SaaS project for merch designers and sellers. It helps them check their text designs for potential trademark infringement on existing trademarks. This is a significant issue in the merch selling community, as it's easy to receive strikes without understanding why. Just two or three strikes can result in losing a substantial portion, if not all, of your income.
 
 ## Challenges
 
