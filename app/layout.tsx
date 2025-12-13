@@ -40,7 +40,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${roboto.variable} ${robotoMono.variable}`}>
+    <html lang="en" className={`${roboto.variable} ${robotoMono.variable}`} suppressHydrationWarning>
       <body className={robotoMono.className}>
         <div className="noise" />
         <div className="content min-h-screen text-slate-800 selection:bg-slate-200">
