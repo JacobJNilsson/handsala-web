@@ -102,21 +102,21 @@ export function NavMenu() {
               <div className="px-2 pt-2 pb-3 space-y-1 bg-card border border-slate-200 shadow-lg rounded-lg mt-2 font-mono text-sm">
                 <Link
                   href={getHomeLink("products")}
-                  className="block px-4 py-3 text-slate-800 hover:bg-slate-50 rounded-md transition-colors uppercase tracking-wider"
+                  className="relative block px-4 py-3 text-slate-800 uppercase tracking-wider after:absolute after:bottom-2 after:left-4 after:h-[1px] after:bg-slate-400 after:w-0 hover:after:w-[calc(100%-2rem)] after:transition-all after:duration-300 after:ease-out"
                   onClick={() => setIsOpen(false)}
                 >
                   Products
                 </Link>
                 <Link
                   href="/blog"
-                  className="block px-4 py-3 text-slate-800 hover:bg-slate-50 rounded-md transition-colors uppercase tracking-wider"
+                  className="relative block px-4 py-3 text-slate-800 uppercase tracking-wider after:absolute after:bottom-2 after:left-4 after:h-[1px] after:bg-slate-400 after:w-0 hover:after:w-[calc(100%-2rem)] after:transition-all after:duration-300 after:ease-out"
                   onClick={() => setIsOpen(false)}
                 >
                   Blog
                 </Link>
                 <Link
                   href={getHomeLink("contact")}
-                  className="block px-4 py-3 text-slate-800 hover:bg-slate-50 rounded-md transition-colors uppercase tracking-wider"
+                  className="relative block px-4 py-3 text-slate-800 uppercase tracking-wider after:absolute after:bottom-2 after:left-4 after:h-[1px] after:bg-slate-400 after:w-0 hover:after:w-[calc(100%-2rem)] after:transition-all after:duration-300 after:ease-out"
                   onClick={() => setIsOpen(false)}
                 >
                   Contact
