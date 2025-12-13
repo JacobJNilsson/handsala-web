@@ -14,7 +14,7 @@ export default function ProductsSection() {
   return (
     <section
       id="products"
-      className="py-24 bg-beige-50 z-10 relative"
+      className="py-24 bg-background z-10 relative"
       ref={sectionRef}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,14 +41,14 @@ export default function ProductsSection() {
                 rel="noopener noreferrer"
                 className="block group"
               >
-                <div className="bg-white overflow-hidden shadow-none border border-[#e2e0d6] hover:border-slate-400 transition-all duration-300">
+                <div className="bg-card overflow-hidden shadow-none border border-[#e2e0d6] hover:border-slate-400 transition-all duration-300">
                   <div className="md:grid md:grid-cols-2">
                     <div className="relative h-56 md:h-full bg-[#e6e4dc] overflow-hidden">
                       <Image
                         src={product.image}
                         alt={product.imageAlt}
                         fill
-                        className="object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
+                        className="object-cover object-center group-hover:scale-105 transition-all duration-500 opacity-90 group-hover:opacity-100"
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
                     </div>

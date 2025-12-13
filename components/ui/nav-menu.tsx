@@ -30,7 +30,7 @@ export function NavMenu() {
     <nav
       className={`fixed w-full z-50 transition-all duration-300 font-mono ${
         scrolled
-        ? "bg-beige-50/80 backdrop-blur-md border-b border-slate-800/5 py-4"
+        ? "bg-background/80 backdrop-blur-md border-b border-slate-800/5 py-4"
         : "bg-transparent py-6"
       }`}
     >
@@ -99,7 +99,7 @@ export function NavMenu() {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="px-2 pt-2 pb-3 space-y-1 bg-white border border-slate-200 shadow-lg rounded-lg mt-2 font-mono text-sm">
+              <div className="px-2 pt-2 pb-3 space-y-1 bg-card border border-slate-200 shadow-lg rounded-lg mt-2 font-mono text-sm">
                 <Link
                   href={getHomeLink("products")}
                   className="block px-4 py-3 text-slate-800 hover:bg-slate-50 rounded-md transition-colors uppercase tracking-wider"

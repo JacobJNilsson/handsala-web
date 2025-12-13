@@ -24,7 +24,7 @@ export default function ClientBlogPostPage({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="bg-white rounded-xl shadow-sm border border-slate-200 p-8 sm:p-12"
+          className="bg-card shadow-sm border border-slate-200 p-8 sm:p-12"
         >
           <header className="mb-10 text-center border-b border-slate-100 pb-10">
             <time className="text-sm text-slate-400 font-mono block mb-4 uppercase tracking-widest">{post.date}</time>

@@ -64,7 +64,7 @@ export default function ClientBlogPage({ posts }: ClientBlogPageProps) {
                   className="block group"
                 >
                   <article
-                    className="bg-white overflow-hidden shadow-none border border-[#e2e0d6] hover:border-slate-400 transition-all duration-300"
+                    className="bg-card overflow-hidden shadow-none border border-[#e2e0d6] hover:border-slate-400 transition-all duration-300"
                   >
                     <div className="md:grid md:grid-cols-[1fr_2fr]">
                       {positionImage(post)}
@@ -101,7 +101,7 @@ function positionImage(post: BlogPost) {
         src={post.coverImage}
         alt={`Cover image for ${post.title}`}
         fill
-        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+        className="object-cover object-center group-hover:scale-105 transition-all duration-500 opacity-90 group-hover:opacity-100"
         sizes="(max-width: 768px) 100vw, 33vw"
       />
     </div>

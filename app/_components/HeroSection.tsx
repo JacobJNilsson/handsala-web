@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 
 export default function HeroSection() {
   return (
-    <section id="home" className="min-h-screen flex flex-col justify-center bg-beige-50 z-0 relative overflow-hidden">
+    <section id="home" className="min-h-screen flex flex-col justify-center bg-background z-0 relative overflow-hidden">
       <div className="flex-grow flex items-center justify-center">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -27,7 +27,7 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="bg-white backdrop-blur-sm p-6 sm:p-10 border border-slate-800/10 shadow-sm max-w-2xl mx-auto text-left">
+            <div className="bg-card backdrop-blur-sm p-6 sm:p-10 border border-slate-800/10 shadow-sm max-w-2xl mx-auto text-left">
               <p className="text-slate-800 leading-relaxed text-lg sm:text-xl font-light">
                 Hey! I&apos;m <span className="font-semibold">Jacob</span>. A developer who finds joy in the logic of code and the chaos of the real world.
                 Whether I&apos;m debugging in a cafe or renovating a house in the woods, I&apos;m always building something.

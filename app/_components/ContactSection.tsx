@@ -23,7 +23,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="min-h-screen flex items-center justify-center bg-beige-50 relative pb-20"
+      className="min-h-screen flex items-center justify-center bg-background relative pb-20"
       ref={sectionRef}
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -31,7 +31,7 @@ export default function ContactSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="bg-white shadow-none border border-[#e2e0d6] p-8 sm:p-12"
+          className="bg-card shadow-none border border-[#e2e0d6] p-8 sm:p-12"
         >
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-12">
             <div className="md:w-1/2">

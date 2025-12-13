@@ -19,7 +19,7 @@ const robotoMono = Roboto_Mono({
 
 export const metadata: Metadata = {
   title: "Handsala AB",
-  description: "Built on trust, honor, and mutual respect",
+  description: "Let's shake on it",
   icons: [
     {
       rel: 'icon',

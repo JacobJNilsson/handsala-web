@@ -50,7 +50,7 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
   }, [categorizedPosts]);
 
   return (
-    <div className="min-h-screen bg-beige-50 pb-20">
+    <div className="min-h-screen bg-background pb-20">
 
       {/* Main content area */}
       <div className="relative pt-24">
@@ -74,7 +74,7 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
             {/* Blog Sidebar */}
             <aside className="w-full md:w-1/4">
               <div className="sticky top-28 space-y-8">
-                <div className="bg-white rounded-lg p-6 shadow-sm border border-slate-200">
+                <div className="bg-card rounded-lg p-6 shadow-sm border border-slate-200">
                   {/* Category navigation */}
                   {sortedCategories.length > 1 && (
                     <div className="space-y-6">

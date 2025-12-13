@@ -5,11 +5,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    @apply bg-[#fdfbf7];
+    @apply bg-background;
     }
 
     body {
-    @apply bg-[#fdfbf7] text-slate-800 antialiased;
+    @apply bg-background text-slate-800 antialiased;
       font-family: var(--font-roboto-mono), monospace;
       position: relative;
     }

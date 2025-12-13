@@ -32,12 +32,12 @@ const config: Config = {
 				cornflowerBlue: '#2d3748', // Replace blue with dark slate for text/headers to be "dev minimalistic"
 				orangeRed: '#e53e3e',
 
-				background: '#fdfbf7', // usage: bg-background
+				background: '#f8eedbff', // usage: bg-background
 				foreground: '#1e293b', // usage: text-foreground
 				muted: '#64748b',
 
   			card: {
-					DEFAULT: 'rgba(255, 255, 255, 0.6)',
+					DEFAULT: '#fdfbf7e4',
 					foreground: '#1e293b'
   			},
   			popover: {
