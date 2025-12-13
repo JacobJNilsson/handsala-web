@@ -4,32 +4,48 @@ import { motion } from "framer-motion"
 
 export default function HeroSection() {
   return (
-    <section id="home" className="min-h-screen flex flex-col justify-center bg-cornflowerBlue z-n1">
-      <div className="noise absolute z-0"/>
-      <div className="flex-grow flex items-center">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="home" className="min-h-screen flex flex-col justify-center bg-beige-50 z-0 relative overflow-hidden">
+      <div className="flex-grow flex items-center justify-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="text-center z-1"
+            className="text-center z-10 relative"
           >
-            <blockquote className="text-4xl sm:text-6xl md:text-8xl font-bold text-white mb-4 sm:mb-8 mt-4 sm:mt-8 lora-regular">
-              &ldquo;Handsala:  <br />
-              <span className="text-3xl sm:text-5xl md:text-7xl">(að), v. to make over (confirm) by shaking hands.&rdquo;</span>
-              <br />
-              <span className="text-base sm:text-lg md:text-xl block mt-4">- A Concise Dictionary of Old Icelandic (Geir Zoëga)</span>
-            </blockquote>
+            <div className="mb-12 font-mono">
+              <h1 className="text-5xl sm:text-7xl md:text-8xl font-bold text-slate-800 mb-6 tracking-tight">
+                Handsala
+              </h1>
+              <div className="text-xl sm:text-2xl text-slate-800/80 max-w-2xl mx-auto font-light leading-relaxed">
+                <p className="mb-2 italic font-serif opacity-75">
+                  (að), v. to make over (confirm) by shaking hands.
+                </p>
+                <p className="text-sm uppercase tracking-widest text-slate-800/50 mt-4">
+                  Concise Dictionary of Old Icelandic
+                </p>
+              </div>
+            </div>
 
-            <div className="bg-white backdrop-blur-sm rounded-2xl p-4 sm:p-8 shadow-lg border border-blue hover:shadow-2xl transition-shadow duration-300 mt-8">
-              <p className="text-beige-800 leading-relaxed text-base sm:text-lg">
-                Hey! I&apos;m Jacob, a developer who loves discovering and playing with new tech. When I&apos;m not coding at city cafes, I&apos;m probably visiting my parents to work on their house in the woods. I geek out over all kinds of design—from architecture to products to code structure. My happy place? Tinkering with projects like innovative flat speakers or building AI workflows. Wanna collaborate on something awesome? Let&apos;s chat!
+            <div className="bg-white backdrop-blur-sm p-6 sm:p-10 border border-slate-800/10 shadow-sm max-w-2xl mx-auto text-left">
+              <p className="text-slate-800 leading-relaxed text-lg sm:text-xl font-light">
+                Hey! I&apos;m <span className="font-semibold">Jacob</span>. A developer who finds joy in the logic of code and the chaos of the real world.
+                Whether I&apos;m debugging in a cafe or renovating a house in the woods, I&apos;m always building something.
+                From architecture to AI workflows, I believe in structured creativity. Let&apos;s build something lasting.
               </p>
+
+              <div className="mt-8 flex gap-4">
+                <a href="#contact" className="inline-block px-6 py-2 bg-slate-800 text-beige-50 font-mono text-sm rounded-lg hover:bg-slate-700 transition-colors">
+                  Get in touch
+                </a>
+                <a href="#products" className="inline-block px-6 py-2 border border-slate-800 text-slate-800 font-mono text-sm rounded-lg hover:bg-slate-800/5 transition-colors">
+                  View Work
+                </a>
+              </div>
             </div>
           </motion.div>
         </div>
       </div>
-      <div className="w-full h-10 bg-repeat-x bg-beige-50" style={{ backgroundImage: "url('/curved-line.svg')", backgroundSize: "64px 64px" }}></div>
     </section>
   );
 }

@@ -13,7 +13,7 @@ export function NavMenu() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const isScrolled = window.scrollY > 50
+      const isScrolled = window.scrollY > 20
       setScrolled(isScrolled)
     }
 
@@ -28,19 +28,17 @@ export function NavMenu() {
 
   return (
     <nav
-      className={`fixed w-full z-10 transition-all duration-300 ${
+      className={`fixed w-full z-50 transition-all duration-300 font-mono ${
         scrolled
-          ? "bg-cornflowerBlue shadow-lg"
-          : "bg-transparent"
+        ? "bg-beige-50/80 backdrop-blur-md border-b border-slate-800/5 py-4"
+        : "bg-transparent py-6"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between">
           <Link
             href={getHomeLink("home")}
-            className={`text-xl sm:text-2xl font-bold transition-all duration-300 poiret-one-regular ${
-              scrolled ? "text-beige-50" : "text-beige-50"
-            } hover:opacity-80`}
+            className="text-xl font-bold text-slate-800 hover:opacity-70 transition-opacity tracking-tight"
           >
             Handsala
           </Link>
@@ -48,7 +46,7 @@ export function NavMenu() {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-beige-50 hover:text-beige-200 focus:outline-none p-2 rounded-full hover:bg-cornflowerBlue/30 transition-colors"
+            className="md:hidden text-slate-800 hover:bg-slate-800/5 p-2 rounded-md transition-colors"
             aria-label="Toggle menu"
           >
             <svg
@@ -69,34 +67,22 @@ export function NavMenu() {
           </button>
 
           {/* Desktop menu */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex space-x-8 text-sm">
             <Link
               href={getHomeLink("products")}
-              className={`text-lg transition-all duration-300 py-1 ${
-                scrolled
-                  ? "text-beige-50 hover:text-beige-200 border-b-2 border-transparent hover:border-beige-50"
-                  : "text-beige-50 hover:text-beige-200 border-b-2 border-transparent hover:border-beige-50"
-              }`}
+              className="text-slate-800 hover:text-slate-600 transition-colors uppercase tracking-wider"
             >
               Products
             </Link>
             <Link
               href="/blog"
-              className={`text-lg transition-all duration-300 py-1 ${
-                scrolled
-                  ? "text-beige-50 hover:text-beige-200 border-b-2 border-transparent hover:border-beige-50"
-                  : "text-beige-50 hover:text-beige-200 border-b-2 border-transparent hover:border-beige-50"
-              }`}
+              className="text-slate-800 hover:text-slate-600 transition-colors uppercase tracking-wider"
             >
               Blog
             </Link>
             <Link
               href={getHomeLink("contact")}
-              className={`text-lg transition-all duration-300 py-1 ${
-                scrolled
-                  ? "text-beige-50 hover:text-beige-200 border-b-2 border-transparent hover:border-beige-50"
-                  : "text-beige-50 hover:text-beige-200 border-b-2 border-transparent hover:border-beige-50"
-              }`}
+              className="text-slate-800 hover:text-slate-600 transition-colors uppercase tracking-wider"
             >
               Contact
             </Link>
@@ -111,26 +97,26 @@ export function NavMenu() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              transition={{ duration: 0.2 }}
             >
-              <div className="px-2 pt-2 pb-3 space-y-1 bg-cornflowerBlue/90 backdrop-blur-sm shadow-lg rounded-2xl border border-cornflowerBlue/30 mt-2">
+              <div className="px-2 pt-2 pb-3 space-y-1 bg-white border border-slate-200 shadow-lg rounded-lg mt-2 font-mono text-sm">
                 <Link
                   href={getHomeLink("products")}
-                  className="block px-4 py-3 text-base font-medium text-beige-50 hover:text-white hover:bg-cornflowerBlue/80 rounded-xl transition-all duration-200"
+                  className="block px-4 py-3 text-slate-800 hover:bg-slate-50 rounded-md transition-colors uppercase tracking-wider"
                   onClick={() => setIsOpen(false)}
                 >
                   Products
                 </Link>
                 <Link
                   href="/blog"
-                  className="block px-4 py-3 text-base font-medium text-beige-50 hover:text-white hover:bg-cornflowerBlue/80 rounded-xl transition-all duration-200"
+                  className="block px-4 py-3 text-slate-800 hover:bg-slate-50 rounded-md transition-colors uppercase tracking-wider"
                   onClick={() => setIsOpen(false)}
                 >
                   Blog
                 </Link>
                 <Link
                   href={getHomeLink("contact")}
-                  className="block px-4 py-3 text-base font-medium text-beige-50 hover:text-white hover:bg-cornflowerBlue/80 rounded-xl transition-all duration-200"
+                  className="block px-4 py-3 text-slate-800 hover:bg-slate-50 rounded-md transition-colors uppercase tracking-wider"
                   onClick={() => setIsOpen(false)}
                 >
                   Contact

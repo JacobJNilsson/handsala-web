@@ -2,34 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-.poiret-one-regular {
-  font-family: "Poiret One", serif;
-  font-weight: 400;
-  font-style: normal;
-}
-
-html {
-  scroll-behavior: smooth;
-  background-color: #6495ED; /* cornflowerBlue */
-}
-
-body {
-  background-color: #6495ED; /* cornflowerBlue */
-  font-family: "Lora", serif;
-  color: beige-800;
-}
-
-.lora-regular {
-  font-family: var(--font-lora);
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
 @layer base {
-  body {
-    font-family: "Lora", serif;
-    color: beige-800;
+  html {
+    scroll-behavior: smooth;
+    @apply bg-[#fdfbf7];
+    }
+
+    body {
+    @apply bg-[#fdfbf7] text-slate-800 antialiased;
+      font-family: var(--font-roboto-mono), monospace;
+      position: relative;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: var(--font-roboto-mono), monospace;
+      @apply font-medium tracking-tight;
   }
 }
 
@@ -44,15 +36,10 @@ body {
   background-repeat: repeat;
   background-size: 1100px 1100px;
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
 }
 
 .content {
   position: relative;
-  z-index: 1;
-}
-
-/* Add this class if you need Poiret One font */
-.poiret-one {
-  font-family: var(--font-poiret-one);
+  z-index: 0;
 }

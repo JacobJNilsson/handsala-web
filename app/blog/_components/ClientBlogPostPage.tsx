@@ -19,27 +19,29 @@ export default function ClientBlogPostPage({
 }: ClientBlogPostPageProps) {
   return (
     <BlogLayout posts={allPosts} currentSlug={slug}>
-      <div className="prose max-w-none">
+      <div className="max-w-4xl mx-auto">
         <motion.article
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="bg-beige-50 rounded-2xl p-6 sm:p-8 md:p-10 shadow-lg"
+          className="bg-white rounded-xl shadow-sm border border-slate-200 p-8 sm:p-12"
         >
-          <div className="mb-8">
+          <header className="mb-10 text-center border-b border-slate-100 pb-10">
+            <time className="text-sm text-slate-400 font-mono block mb-4 uppercase tracking-widest">{post.date}</time>
+            <h1 className="text-3xl md:text-5xl font-bold text-slate-800 mb-6 font-mono tracking-tight leading-tight">{post.title}</h1>
             {post.coverImage && (
-              <div className="mb-6 rounded-xl overflow-hidden shadow-md relative aspect-video">
+              <div className="mt-8 rounded-lg overflow-hidden shadow-sm aspect-video relative">
                 <BlogImage
                   src={post.coverImage}
                   alt={`Cover image for ${post.title}`}
                 />
               </div>
             )}
+          </header>
 
-            <time className="text-sm text-beige-600 block">{post.date}</time>
+          <div className="prose prose-slate prose-lg max-w-none">
+            <MarkdownRenderer markdown={post.content} />
           </div>
-
-          <MarkdownRenderer markdown={post.content} />
         </motion.article>
       </div>
     </BlogLayout>

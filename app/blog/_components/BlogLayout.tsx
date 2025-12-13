@@ -50,102 +50,101 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
   }, [categorizedPosts]);
 
   return (
-    <div className="min-h-screen bg-cornflowerBlue relative">
-      {/* Apply noise texture to the entire page */}
-      <div className="noise absolute z-0"/>
+    <div className="min-h-screen bg-beige-50 pb-20">
 
-      {/* Main content area with proper z-index */}
-      <div className="relative z-1 pt-20">
-        {/* Hero section with title */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
+      {/* Main content area */}
+      <div className="relative pt-24">
+        {/* Header section */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 lora-regular">
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-6 font-mono tracking-tight">
               {isRootBlogPage ? 'Handsala Blog' : posts.find(p => p.slug === currentSlug)?.title}
             </h1>
             {isRootBlogPage && (
-              <p className="text-xl text-white/90 max-w-2xl mx-auto mb-2">
-                Thoughts, insights, and updates from me
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto mb-2 font-light">
+                Thoughts, insights, and updates.
               </p>
             )}
           </div>
         </div>
 
         {/* Main content with sidebar and posts */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row gap-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row gap-12">
             {/* Blog Sidebar */}
             <aside className="w-full md:w-1/4">
-              <div className="bg-beige-50 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-cornflowerBlue/20 hover:shadow-xl transition-shadow duration-300 sticky top-24">
-                {/* Category navigation */}
-                {sortedCategories.length > 1 && (
-                  <>
-                    <h2 className="text-xl font-semibold mb-4 text-cornflowerBlue lora-regular">Categories</h2>
-                    <div className="mb-6 space-y-1">
-                      {sortedCategories.map(category => (
-                        <div key={category} className="mb-4">
-                          <h3 className="font-medium text-beige-800 mb-2 capitalize lora-regular">{category}</h3>
-                          <ul className="space-y-2 pl-2">
-                            {categorizedPosts[category].map(post => (
-                              <li key={post.slug} className="text-sm">
-                                <Link
-                                  href={`/blog/${post.slug}`}
-                                  className={`block hover:bg-beige-100 p-2 rounded-lg transition-colors ${
-                                    currentSlug === post.slug ? 'bg-beige-100 font-semibold' : ''
-                                  }`}
-                                >
-                                  <span className="block text-xs text-beige-600">{post.date}</span>
-                                  <span className="font-medium">{post.title}</span>
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
+              <div className="sticky top-28 space-y-8">
+                <div className="bg-white rounded-lg p-6 shadow-sm border border-slate-200">
+                  {/* Category navigation */}
+                  {sortedCategories.length > 1 && (
+                    <div className="space-y-6">
+                      <h2 className="text-sm uppercase tracking-widest font-semibold text-slate-800 font-mono border-b border-slate-100 pb-2">Categories</h2>
+                      <div className="space-y-4">
+                        {sortedCategories.map(category => (
+                            <div key={category}>
+                              <h3 className="text-xs font-bold text-slate-400 uppercase mb-2 font-mono">{category}</h3>
+                              <ul className="space-y-1">
+                                {categorizedPosts[category].map(post => (
+                                  <li key={post.slug}>
+                                    <Link
+                                      href={`/blog/${post.slug}`}
+                                      className={`block px-2 py-1.5 rounded-md text-sm transition-colors ${currentSlug === post.slug
+                                          ? 'bg-slate-100 text-slate-900 font-medium'
+                                          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                                        }`}
+                                    >
+                                      {post.title}
+                                    </Link>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                      </div>
                     </div>
-                  </>
-                )}
+                  )}
 
-                {/* Simple post list (when no categories) */}
-                {sortedCategories.length <= 1 && (
-                  <>
-                    <h2 className="text-xl font-semibold mb-4 text-cornflowerBlue lora-regular">Posts</h2>
-                    <ul className="space-y-2">
-                      {posts.map(post => (
-                        <li key={post.slug}>
-                          <Link
-                            href={`/blog/${post.slug}`}
-                            className={`block hover:bg-beige-100 p-2 rounded-lg transition-colors ${
-                              currentSlug === post.slug ? 'bg-beige-100 font-semibold' : ''
-                            }`}
-                          >
-                            <span className="block text-sm text-beige-600">{post.date}</span>
-                            <span className="font-medium">{post.title}</span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
+                  {/* Simple post list (when no categories) */}
+                  {sortedCategories.length <= 1 && (
+                    <div>
+                      <h2 className="text-sm uppercase tracking-widest font-semibold text-slate-800 font-mono mb-4 border-b border-slate-100 pb-2">Posts</h2>
+                      <ul className="space-y-1">
+                        {posts.map(post => (
+                          <li key={post.slug}>
+                            <Link
+                              href={`/blog/${post.slug}`}
+                                className={`block px-2 py-1.5 rounded-md text-sm transition-colors ${currentSlug === post.slug
+                                    ? 'bg-slate-100 text-slate-900 font-medium'
+                                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                                  }`}
+                              >
+                                {post.title}
+                              </Link>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  )}
 
-                {!isRootBlogPage && (
-                  <div className="mt-6">
+                  {!isRootBlogPage && (
+                    <div className="mt-8 pt-4 border-t border-slate-100">
+                      <Link
+                        href="/blog"
+                        className="text-slate-500 hover:text-slate-800 text-sm font-mono inline-flex items-center gap-2 transition-colors"
+                      >
+                        ← All Posts
+                      </Link>
+                    </div>
+                  )}
+
+                  <div className="mt-4 pt-4 border-t border-slate-100">
                     <Link
-                      href="/blog"
-                      className="text-cornflowerBlue hover:underline inline-flex items-center gap-1"
+                      href="/"
+                      className="text-slate-500 hover:text-slate-800 text-sm font-mono inline-flex items-center gap-2 transition-colors"
                     >
-                      ← Back to all posts
+                      Home
                     </Link>
                   </div>
-                )}
-
-                {/* Home link with transition */}
-                <div className="mt-6 pt-4 border-t border-beige-200">
-                  <Link
-                    href="/"
-                    className="text-cornflowerBlue hover:text-cornflowerBlue/80 hover:underline inline-flex items-center gap-1"
-                  >
-                    ← Back to Home
-                  </Link>
                 </div>
               </div>
             </aside>
