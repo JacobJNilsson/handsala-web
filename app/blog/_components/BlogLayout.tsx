@@ -107,14 +107,14 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
                   {/* Simple post list (when no categories) */}
                   {sortedCategories.length <= 1 && (
                     <div>
-                      <h2 className="text-sm uppercase tracking-widest font-semibold text-slate-800 font-mono mb-4 border-b border-slate-100 pb-2">Posts</h2>
+                      <h2 className="text-sm uppercase tracking-widest font-semibold text-slate-800 font-mono mb-4 border-b border-slate-400 pb-2">Posts</h2>
                       <ul className="space-y-1">
                         {posts.map(post => (
                           <li key={post.slug}>
                             <Link
                               href={`/blog/${post.slug}`}
                                 className={`block px-2 py-1.5 rounded-md text-sm transition-colors ${currentSlug === post.slug
-                                    ? 'bg-slate-100 text-slate-900 font-medium'
+                                  ? 'bg-slate-400 text-slate-900 font-medium'
                                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                                   }`}
                               >
@@ -127,7 +127,7 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
                   )}
 
                   {!isRootBlogPage && (
-                    <div className="mt-8 pt-4 border-t border-slate-100">
+                    <div className="mt-8 pt-4 border-t border-slate-400">
                       <Link
                         href="/blog"
                         className="text-slate-500 hover:text-slate-800 text-sm font-mono inline-flex items-center gap-2 transition-colors"
@@ -137,7 +137,7 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
                     </div>
                   )}
 
-                  <div className="mt-4 pt-4 border-t border-slate-100">
+                  <div className="mt-4 pt-4 border-t border-slate-400">
                     <Link
                       href="/"
                       className="text-slate-500 hover:text-slate-800 text-sm font-mono inline-flex items-center gap-2 transition-colors"

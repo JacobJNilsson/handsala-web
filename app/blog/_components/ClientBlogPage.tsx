@@ -14,7 +14,7 @@ export default function ClientBlogPage({ posts }: ClientBlogPageProps) {
   return (
     <BlogLayout posts={posts}>
       <div className="max-w-none">
-        <div className="flex justify-between items-center mb-10 border-b border-slate-200 pb-4">
+        <div className="flex justify-between items-center mb-10 border-b border-slate-400 pb-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
