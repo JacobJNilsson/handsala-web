@@ -1,21 +1,20 @@
 import "./globals.css"
 import { NavMenu } from "@/components/ui/nav-menu"
-import { Lora, Poiret_One } from 'next/font/google'
+import { Roboto, Roboto_Mono } from 'next/font/google'
 import { Metadata } from 'next/types'
-import LoadingIndicator from "@/components/ui/loading-indicator"
 import { Suspense } from "react"
 
-const lora = Lora({
+const roboto = Roboto({
+  weight: ['400', '500', '700'],
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-lora',
+  variable: '--font-roboto',
 })
 
-const poiretOne = Poiret_One({
-  weight: '400',
+const robotoMono = Roboto_Mono({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-poiret-one',
+  variable: '--font-roboto-mono',
 })
 
 export const metadata: Metadata = {
@@ -41,13 +40,11 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${lora.variable} ${poiretOne.variable}`}>
-      <body>
-        <div className="content">
+    <html lang="en" className={`${roboto.variable} ${robotoMono.variable}`}>
+      <body className={robotoMono.className}>
+        <div className="noise" />
+        <div className="content min-h-screen text-slate-800 selection:bg-slate-200">
           <NavMenu />
-          <Suspense fallback={null}>
-            <LoadingIndicator />
-          </Suspense>
           {children}
         </div>
       </body>

@@ -5,7 +5,7 @@ export const companyreport: Product = {
   title: 'CompanyReport.ai',
   description: 'Currently a landing page for testing market interest in comprehensive company analysis. The vision is to provide detailed insights about any company\'s business model, competitive positioning, and financial performance without the hours of research. Perfect for investors, consultants, and anyone who needs to understand companies quickly and thoroughly.',
   category: 'Business Intelligence',
-  categoryColor: 'bg-cornflowerBlue',
+  categoryColor: 'bg-slate-800',
   image: '/images/blog/company-report.png',
   imageAlt: 'CompanyReport.ai landing page screenshot',
   url: 'https://companyreport.ai',
@@ -15,8 +15,8 @@ export const companyreport: Product = {
     'Building towards comprehensive business intelligence platform'
   ],
   technologies: [
-    { name: 'Next.js', color: 'text-orangeRed' },
-    { name: 'Tailwind', color: 'text-cornflowerBlue' },
-    { name: 'Supabase', color: 'text-cornflowerBlue' }
+    { name: 'Next.js', color: 'text-slate-700' },
+    { name: 'Tailwind', color: 'text-slate-700' },
+    { name: 'Supabase', color: 'text-slate-700' }
   ]
 };

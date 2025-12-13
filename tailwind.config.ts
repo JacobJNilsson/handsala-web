@@ -11,62 +11,64 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        orangeRed: '#ff4500',
-        tomato: '#ff6347',
-        coral: '#ff7f50',
-        cornflowerBlue: '#4169e1',
-        blue: '#0000ff',
-  			beige: {
-  				'50': '#fdf8f6',
-  				'100': '#f2e8e5',
-  				'200': '#eaddd7',
-  				'300': '#e0cec7',
-  				'400': '#d2bab0',
-  				'500': '#bfa094',
-  				'600': '#a18072',
-  				'700': '#977669',
-  				'800': '#846358',
-  				'900': '#43302b'
-  			},
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
+				// Minimalistic Beige Palette
+				beige: {
+					50: '#fdfbf7',
+					100: '#f7f3e8',
+					200: '#efe5d1',
+					300: '#e5d1b0',
+					400: '#dbb98e',
+					500: '#d2a072',
+					600: '#c5865a',
+					700: '#a46a48', // Text/Accent
+					800: '#87563e',
+					900: '#6d4633',
+				},
+				slate: {
+					800: '#1e293b',
+					900: '#0f172a',
+				},
+				// Mapping old specific colors to new theme (soft migration or direct replacement)
+				cornflowerBlue: '#2d3748', // Replace blue with dark slate for text/headers to be "dev minimalistic"
+				orangeRed: '#e53e3e',
+
+				background: '#fdfbf7', // usage: bg-background
+				foreground: '#1e293b', // usage: text-foreground
+				muted: '#64748b',
+
   			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
+					DEFAULT: 'rgba(255, 255, 255, 0.6)',
+					foreground: '#1e293b'
   			},
   			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
+					DEFAULT: '#ffffff',
+					foreground: '#1e293b'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+					DEFAULT: '#1e293b',
+					foreground: '#fdfbf7'
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
-  			},
-  			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
+					DEFAULT: '#efe5d1',
+					foreground: '#1e293b'
   			},
   			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
+					DEFAULT: '#d2a072',
+					foreground: '#fdfbf7'
   			},
   			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
+					DEFAULT: '#ef4444',
+					foreground: '#fdfbf7'
   			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
+				border: '#e2e8f0',
+				input: '#e2e8f0',
+				ring: '#cbd5e1',
   			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
+					'1': '#64748b',
+					'2': '#94a3b8',
+					'3': '#cbd5e1',
+					'4': '#e2e8f0',
+					'5': '#f1f5f9'
   			}
   		},
   		borderRadius: {

@@ -14,7 +14,7 @@ export default function ProductsSection() {
   return (
     <section
       id="products"
-      className="min-h-screen py-16 flex items-center justify-center bg-beige-50 z-2 -mt-2"
+      className="py-24 bg-beige-50 z-10 relative"
       ref={sectionRef}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,66 +23,67 @@ export default function ProductsSection() {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-3xl sm:text-4xl font-bold text-cornflowerBlue mb-4 text-center">
-            Stuff I&apos;ve Built
-          </h2>
-          <p className="text-lg sm:text-xl text-beige-800 mb-8 sm:mb-12 text-center max-w-2xl mx-auto">
-            Projects that kept me up at night (in a good way)
-          </p>
+          <div className="mb-16 text-center">
+            <h2 className="text-3xl sm:text-4xl font-mono font-bold text-slate-800 mb-4 tracking-tighter">
+              Selected Work
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto font-light">
+              Recent experiments and full-scale applications.
+            </p>
+          </div>
 
-          <div>
-            {products.map((product, index) => (
+          <div className="grid grid-cols-1 gap-12">
+            {products.map((product) => (
               <Link
                 key={product.id}
                 href={product.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`block ${index < products.length - 1 ? 'mb-12' : ''}`}
+                className="block group"
               >
-                <div className="bg-white/50 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-orangeRed hover:shadow-2xl transition-shadow duration-300">
+                <div className="bg-white overflow-hidden shadow-none border border-[#e2e0d6] hover:border-slate-400 transition-all duration-300">
                   <div className="md:grid md:grid-cols-2">
-                    <div className="relative h-48 sm:h-64 md:h-full bg-beige-100">
+                    <div className="relative h-56 md:h-full bg-[#e6e4dc] overflow-hidden">
                       <Image
                         src={product.image}
                         alt={product.imageAlt}
                         fill
-                        className="object-cover object-center"
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100"
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
                     </div>
 
-                    <div className="p-8">
-                      <div className="mb-2">
-                        <span className={`inline-block ${product.categoryColor} text-white text-sm font-medium px-3 py-1 rounded-full`}>
+                    <div className="p-6 flex flex-col justify-center">
+                      <div className="mb-3">
+                        <span className={`inline-block ${product.categoryColor} text-white text-[10px] font-mono px-2 py-0.5 rounded-md uppercase tracking-wider`}>
                           {product.category}
                         </span>
                       </div>
-                      <h3 className="text-2xl font-semibold text-cornflowerBlue mb-4">
+                      <h3 className="text-xl font-bold text-slate-800 mb-2 group-hover:text-slate-600 transition-colors font-mono tracking-tight">
                         {product.title}
                       </h3>
-                      <p className="text-beige-800 mb-6 leading-relaxed">
+                      <p className="text-slate-600 mb-4 leading-relaxed font-light text-sm">
                         {product.description}
                       </p>
+
                       <div className="space-y-4">
                         <div>
-                          <h4 className="text-lg font-medium text-cornflowerBlue mb-2">
-                            What Makes It Special
-                          </h4>
-                          <ul className="list-disc list-inside text-beige-800 space-y-1">
-                            {product.features.map((feature, featureIndex) => (
-                              <li key={featureIndex}>{feature}</li>
+                          <ul className="space-y-1">
+                            {product.features.slice(0, 3).map((feature, idx) => (
+                              <li key={idx} className="flex items-start text-xs text-slate-600 font-mono">
+                                <span className="mr-2 text-slate-400">-</span>
+                                {feature}
+                              </li>
                             ))}
                           </ul>
                         </div>
+
                         <div>
-                          <h4 className="text-lg font-medium text-cornflowerBlue mb-2">
-                            Built with
-                          </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {product.technologies.map((tech, techIndex) => (
+                          <div className="flex flex-wrap gap-1.5">
+                            {product.technologies.slice(0, 4).map((tech, techIndex) => (
                               <span
                                 key={techIndex}
-                                className={`bg-beige-100 ${tech.color} px-3 py-1 rounded-full text-sm`}
+                                className="bg-[#e6e4dc] text-slate-700 px-2 py-0.5 rounded-md text-[10px] font-mono border border-[#dcdad0]"
                               >
                                 {tech.name}
                               </span>

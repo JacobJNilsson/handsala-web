@@ -75,7 +75,7 @@ export default function BlogLayout({ children, posts, currentSlug }: BlogLayoutP
           <div className="flex flex-col md:flex-row gap-8">
             {/* Blog Sidebar */}
             <aside className="w-full md:w-1/4">
-              <div className="bg-beige-50 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-cornflowerBlue/20 hover:shadow-xl transition-shadow duration-300 sticky top-24">
+              <div className="bg-beige-50 backdrop-blur-sm p-4 shadow-lg border border-cornflowerBlue/20 hover:shadow-xl transition-shadow duration-300 sticky top-24">
                 {/* Category navigation */}
                 {sortedCategories.length > 1 && (
                   <>

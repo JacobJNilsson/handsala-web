@@ -13,13 +13,13 @@ interface ClientBlogPageProps {
 export default function ClientBlogPage({ posts }: ClientBlogPageProps) {
   return (
     <BlogLayout posts={posts}>
-      <div className="prose max-w-none text-white">
-        <div className="flex justify-between items-center mb-6">
+      <div className="max-w-none">
+        <div className="flex justify-between items-center mb-10 border-b border-slate-200 pb-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="text-2xl font-bold text-white lora-regular"
+            className="text-2xl font-bold text-slate-800 font-mono tracking-tight"
           >
             Recent Posts
           </motion.h2>
@@ -30,7 +30,7 @@ export default function ClientBlogPage({ posts }: ClientBlogPageProps) {
           >
             <Link
               href="/"
-              className="px-4 py-2 bg-cornflowerBlue/20 hover:bg-cornflowerBlue/30 text-white/90 hover:text-white rounded-lg transition-all duration-300"
+              className="inline-block px-6 py-2 bg-slate-800 text-beige-50 font-mono text-sm rounded-lg hover:bg-slate-700 transition-all duration-300"
             >
               Back to Home
             </Link>
@@ -42,12 +42,12 @@ export default function ClientBlogPage({ posts }: ClientBlogPageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.2, ease: "easeOut" }}
-            className="text-white/90"
+            className="text-slate-600 font-light"
           >
             No posts yet. Check back soon!
           </motion.p>
         ) : (
-          <div className="space-y-8">
+            <div className="space-y-12">
             {posts.map((post, index) => (
               <motion.div
                 key={post.slug}
@@ -61,28 +61,26 @@ export default function ClientBlogPage({ posts }: ClientBlogPageProps) {
               >
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="block hover:-translate-y-1 transition-all duration-300"
+                  className="block group"
                 >
                   <article
-                    className="bg-beige-50 backdrop-blur-sm rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-2xl transition-all duration-300 md:grid md:grid-cols-[1fr_1.618fr]"
+                    className="bg-white overflow-hidden shadow-none border border-[#e2e0d6] hover:border-slate-400 transition-all duration-300"
                   >
-                    {post.coverImage && (
-                      <div className="relative h-48 sm:h-64 md:h-full bg-beige-100 mb-4 md:mb-0">
-                        <Image
-                          src={post.coverImage}
-                          alt={`Cover image for ${post.title}`}
-                          fill
-                          className="object-cover object-center"
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                        />
+                    <div className="md:grid md:grid-cols-[1fr_2fr]">
+                      {positionImage(post)}
+                      <div className="p-6 md:p-6 flex flex-col justify-center">
+                        <div className="flex items-center text-[10px] text-slate-400 mb-2 font-mono uppercase tracking-wider space-x-2">
+                          <time>{post.date}</time>
+                          {/* Add category if available later */}
+                        </div>
+                        <h3 className="text-lg md:text-xl font-bold mb-2 text-slate-800 group-hover:text-slate-600 transition-colors font-mono tracking-tight">
+                          {post.title}
+                        </h3>
+                        <p className="text-slate-600 leading-relaxed font-light text-sm line-clamp-2">{post.excerpt}</p>
+                        <div className="mt-3 flex items-center text-xs text-slate-500 font-mono group-hover:text-slate-800 transition-colors">
+                          Read more <span className="ml-2">→</span>
+                        </div>
                       </div>
-                    )}
-                    <div className="p-4">
-                      <h3 className="text-xl font-semibold mb-2 text-cornflowerBlue">
-                        {post.title}
-                      </h3>
-                      <time className="text-sm text-beige-600 mb-3 block">{post.date}</time>
-                      <p className="mb-0 text-beige-800">{post.excerpt}</p>
                     </div>
                   </article>
                 </Link>
@@ -92,5 +90,20 @@ export default function ClientBlogPage({ posts }: ClientBlogPageProps) {
         )}
       </div>
     </BlogLayout>
+  )
+}
+
+function positionImage(post: BlogPost) {
+  if (!post.coverImage) return null;
+  return (
+    <div className="relative h-48 sm:h-64 md:h-full bg-[#e6e4dc] overflow-hidden">
+      <Image
+        src={post.coverImage}
+        alt={`Cover image for ${post.title}`}
+        fill
+        className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+        sizes="(max-width: 768px) 100vw, 33vw"
+      />
+    </div>
   )
 }
