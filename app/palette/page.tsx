@@ -32,7 +32,7 @@ export default function PalettePage() {
               Get it on Google Play
             </Link>
             <Link
-              href="/palette/play"
+              href="/palette/load"
               className="inline-flex items-center px-6 py-3 bg-white text-slate-800 font-mono text-sm rounded-md border-2 border-slate-800 hover:bg-slate-50 transition-colors"
             >
               Try Web Version
