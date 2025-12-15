@@ -8,7 +8,7 @@ export const palette: Product = {
   categoryColor: 'bg-slate-700',
   image: '/palette-filled-game.png',
   imageAlt: 'Screenshot of Pallet game showing filled puzzle state',
-  url: 'https://play.google.com/store/apps/details?id=se.handsala.spectrum&pcampaignid=web_share',
+  url: '/palette',
   features: [
     'Fresh puzzles daily (I don\'t sleep, I generate puzzles)',
     'Multiple grid sizes for when you\'re feeling extra smart',
