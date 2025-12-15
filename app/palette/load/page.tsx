@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 export default function PalettePlayPage() {
   useEffect(() => {
     // Redirect to the actual Flutter web app
-    window.location.replace('/palette/play/index.html');
+    window.location.replace('/palette/play/');
   }, []);
 
   return (
