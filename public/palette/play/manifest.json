@@ -1,8 +1,8 @@
 {
     "name": "Palette - Puzzle Game",
     "short_name": "Palette",
-    "start_url": "/palette/play/",
-    "scope": "/palette/play/",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#FAF7EF",
     "theme_color": "#FAF7EF",
