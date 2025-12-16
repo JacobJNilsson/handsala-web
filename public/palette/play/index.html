@@ -25,15 +25,31 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Palette">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="icons/Icon-192.png">
+
+  <!-- iOS icons (dynamically set by script below) -->
+  <link rel="apple-touch-icon" id="apple-icon" href="icons/Icon-192.png">
+  <link rel="apple-touch-icon" id="apple-icon-180" sizes="180x180" href="icons/Icon-192.png">
+
+  <!-- Favicon with color scheme support -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/Icon-192.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/Icon-192-dark.png" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/Icon-192.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/Icon-192-dark.png" media="(prefers-color-scheme: dark)">
 
   <!-- Additional PWA meta tags -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="theme-color" content="#FAF7EF">
+  <meta name="theme-color" content="#FAF7EF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <!-- Script to set correct icon based on color scheme -->
+  <script>
+      (function () {
+        const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const iconPath = isDark ? 'icons/Icon-192-dark.png' : 'icons/Icon-192.png';
+        document.getElementById('apple-icon').href = iconPath;
+        document.getElementById('apple-icon-180').href = iconPath;
+    })();
+  </script>
 
   <title>Palette</title>
   <link rel="manifest" href="manifest.json">
