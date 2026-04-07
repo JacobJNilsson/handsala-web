@@ -2,6 +2,23 @@
 
 The official web platform for Handsala, built with Next.js.
 
+## Hosting
+
+The site is hosted on [Sevalla](https://sevalla.com) (static site hosting) with [Cloudflare](https://cloudflare.com) as the DNS/proxy layer.
+
+- **Sevalla** auto-deploys from the `palette` branch on push, running `npm run build` and serving the `out/` directory.
+- **Cloudflare** provides DNS, CDN caching, and edge features. Note: Cloudflare Rocket Loader is active and must be kept disabled for Flutter scripts via `data-cfasync="false"` attributes in `public/palette/play/index.html`.
+
+### Palette (Flutter Web App)
+
+The Palette puzzle game is a Flutter web app deployed as static files under `public/palette/play/`. To update it:
+
+1. In the `palette` repo, run `./deploy_to_nextjs.sh ../handsala-web`
+2. Commit and push the updated files in this repo
+3. Sevalla auto-deploys on push to the configured branch
+
+See the [palette repo](https://github.com/JacobJNilsson/palette) for build details.
+
 ## Setup
 
 ### Prerequisites
@@ -14,9 +31,10 @@ The official web platform for Handsala, built with Next.js.
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/yourusername/handsala-web.git
+   git clone https://github.com/JacobJNilsson/handsala-web.git
    cd handsala-web
    ```
+
 2. Install dependencies
 
    ```bash
@@ -41,25 +59,8 @@ To build the application for production:
 npm run build
 ```
 
-To start the production server:
+The output is a fully static export in the `out/` directory. To preview locally:
 
 ```bash
 npx serve@latest out
 ```
-
-## Docker
-
-This project includes a Dockerfile for containerized deployment:
-
-1. Build the Docker image
-
-   ```bash
-   docker build -t handsala-web .
-   ```
-2. Run the container
-
-   ```bash
-   docker run -p 3000:3000 handsala-web
-   ```
-
-Access the application at [http://localhost:3000](http://localhost:3000).
