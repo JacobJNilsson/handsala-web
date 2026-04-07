@@ -161,21 +161,24 @@
     </div>
     <script data-cfasync="false">
       // Remove loading screen when Flutter is ready
-      window.addEventListener("flutter-first-frame", function () {
+      function removeLoading() {
         var loading = document.getElementById("loading");
         if (loading) {
+          loading.style.pointerEvents = "none";
           loading.style.opacity = "0";
           loading.style.transition = "opacity 0.3s ease-out";
           setTimeout(function () {
             loading.remove();
           }, 300);
         }
-      });
+      }
+      window.addEventListener("flutter-first-frame", removeLoading);
 
       // Fallback: remove loading screen after 30 seconds if Flutter hasn't loaded
       setTimeout(function () {
         var loading = document.getElementById("loading");
         if (loading) {
+          loading.style.pointerEvents = "none";
           loading.innerHTML =
             '<h1>Palette</h1><div id="loading-text">Taking longer than expected...<br>Try refreshing the page</div>';
         }
