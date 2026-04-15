@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 export default function PalettePage() {
   return (
@@ -18,7 +18,8 @@ export default function PalettePage() {
           Palette is optimized for mobile
         </h1>
         <p className="text-slate-600 font-light text-lg mb-8">
-          The game is designed for touch controls and portrait orientation. Some features may not work perfectly on desktop browsers.
+          The game is designed for touch controls and portrait orientation. Some
+          features may not work perfectly on desktop browsers.
         </p>
 
         <div className="space-y-4">
@@ -32,7 +33,7 @@ export default function PalettePage() {
               Get it on Google Play
             </Link>
             <Link
-              href="/palette/load"
+              href="/palette/play/index.html"
               className="inline-flex items-center px-6 py-3 bg-white text-slate-800 font-mono text-sm rounded-md border-2 border-slate-800 hover:bg-slate-50 transition-colors"
             >
               Try Web Version
@@ -43,4 +44,3 @@ export default function PalettePage() {
     </div>
   );
 }
-
