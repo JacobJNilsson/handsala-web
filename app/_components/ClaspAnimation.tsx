@@ -1,0 +1,240 @@
+"use client"
+
+import { useCallback, useEffect, useRef } from "react"
+import { animate, motion, useInView, useMotionValue, useReducedMotion, useTransform, type MotionValue } from "framer-motion"
+import {
+  LEFT_BACK,
+  LEFT_BACK_FILL,
+  LEFT_BACK_FILL_TUCK,
+  LEFT_BACK_REGION_FILL,
+  LEFT_BACK_TUCK,
+  LEFT_FRONT,
+  LEFT_FRONT_FILL,
+  LEFT_FRONT_FILL_LONG,
+  LEFT_FRONT_FILL_TUCK,
+  LEFT_FRONT_LONG,
+  MIRROR,
+  RIGHT_BACK_FLIGHT,
+  RIGHT_BAND_FILL,
+  RIGHT_FRONT_LONG,
+  RIGHT_FRONT_TUCK,
+  STROKE_WIDTH,
+} from "./handshake-paths"
+
+const VELLUM = "oklch(94.5% 0.021 85)"
+const VERMILLION = "oklch(55% 0.185 33)"
+
+/* One path that morphs from pose A (fold 0) to pose B (fold 1).
+   Both poses share one path command structure, so d interpolates
+   cleanly. Motion values drive the morph directly; the component
+   does not use AnimationControls, whose start promises can hang
+   after a strict-mode remount. */
+function MorphPath({ a, b, fold, fill }: { a: string; b: string; fold: MotionValue<number>; fill?: boolean }) {
+  const d = useTransform(fold, [0, 1], [a, b])
+  if (fill) return <motion.path d={d} fill={VERMILLION} stroke="none" />
+  return <motion.path d={d} />
+}
+
+/* A layer of stroked chains over an opaque body fill. */
+function MorphLayer({
+  a,
+  b,
+  fillA,
+  fillB,
+  fold,
+}: {
+  a: string[]
+  b: string[]
+  fillA: string
+  fillB: string
+  fold: MotionValue<number>
+}) {
+  return (
+    <>
+      <MorphPath a={fillA} b={fillB} fold={fold} fill />
+      <g stroke={VELLUM} strokeWidth={STROKE_WIDTH}>
+        {a.map((d, i) => (
+          <MorphPath key={d} a={d} b={b[i]} fold={fold} />
+        ))}
+      </g>
+    </>
+  )
+}
+
+/* The full clasp scene: fly in, retract and fold, close, one synced
+   pump. The tuck pose is the clasp; no image swap occurs. The parent
+   supplies a vermillion background and any interactivity. */
+export default function ClaspAnimation({
+  speed = 4,
+  autoPlay = "inView",
+  playSignal,
+  onDone,
+  className,
+}: {
+  speed?: number
+  autoPlay?: "mount" | "inView"
+  playSignal?: number
+  onDone?: () => void
+  className?: string
+}) {
+  const xL = useMotionValue(-720)
+  const xR = useMotionValue(720)
+  const fold = useMotionValue(0)
+  const angL = useMotionValue(0)
+  const angR = useMotionValue(0)
+  const leftRot0 = useRef<SVGGElement>(null)
+  const leftRot1 = useRef<SVGGElement>(null)
+  const rightRot0 = useRef<SVGGElement>(null)
+  const rightRot1 = useRef<SVGGElement>(null)
+  const rightRot2 = useRef<SVGGElement>(null)
+  const svgRef = useRef<SVGSVGElement>(null)
+  const inView = useInView(svgRef, { once: true, amount: 0.5 })
+  const reduceMotion = useReducedMotion()
+  const runId = useRef(0)
+  const doneRef = useRef(onDone)
+  useEffect(() => {
+    doneRef.current = onDone
+  })
+
+  const play = useCallback(async () => {
+    const run = ++runId.current
+    const alive = () => runId.current === run
+    for (const v of [xL, xR, fold, angL, angR]) v.stop()
+    if (reduceMotion) {
+      xL.set(0)
+      xR.set(0)
+      fold.set(1)
+      doneRef.current?.()
+      return
+    }
+    xL.set(-720)
+    xR.set(720)
+    fold.set(0)
+    angL.set(0)
+    angR.set(0)
+    await new Promise((r) => setTimeout(r, 400 / speed))
+    if (!alive()) return
+    // fly in fully stretched all the way to the almost-clasped position
+    await Promise.all([
+      animate(xL, -34, { duration: 2.0 / speed, ease: [0.3, 0, 0.7, 0.25] }),
+      animate(xR, 34, { duration: 2.0 / speed, ease: [0.3, 0, 0.7, 0.25] }),
+    ])
+    if (!alive()) return
+    // fingers retract and fold while the hands keep creeping inward
+    await Promise.all([
+      animate(fold, 1, { duration: 0.42 / speed, ease: "easeInOut" }),
+      animate(xL, -6, { duration: 0.42 / speed, ease: "linear" }),
+      animate(xR, 6, { duration: 0.42 / speed, ease: "linear" }),
+    ])
+    if (!alive()) return
+    // fast final close; no image swap, the tucked hands are the clasp
+    await Promise.all([
+      animate(xL, [-6, 3, 0], { duration: 0.45 / speed, times: [0, 0.5, 1], ease: "easeOut" }),
+      animate(xR, [6, -3, 0], { duration: 0.45 / speed, times: [0, 0.5, 1], ease: "easeOut" }),
+    ])
+    if (!alive()) return
+    // the shake: both hands pivot at their arm sides, synced, one firm pump
+    await Promise.all([
+      animate(angL, [0, 7, -2.2, 0], { duration: Math.max(0.7 / speed, 0.5), times: [0, 0.4, 0.75, 1], ease: "easeInOut" }),
+      animate(angR, [0, -7, 2.2, 0], { duration: Math.max(0.7 / speed, 0.5), times: [0, 0.4, 0.75, 1], ease: "easeInOut" }),
+    ])
+    if (!alive()) return
+    doneRef.current?.()
+  }, [xL, xR, fold, angL, angR, speed, reduceMotion])
+
+  useEffect(() => {
+    const ls = [leftRot0, leftRot1]
+    const rs = [rightRot0, rightRot1, rightRot2]
+    const u1 = angL.on("change", (v) => {
+      for (const r of ls) r.current?.setAttribute("transform", `rotate(${v} 60 630)`)
+    })
+    const u2 = angR.on("change", (v) => {
+      for (const r of rs) r.current?.setAttribute("transform", `rotate(${v} 1007 630)`)
+    })
+    return () => { u1(); u2() }
+  }, [angL, angR])
+
+  useEffect(() => {
+    if (autoPlay === "mount") play()
+  }, [autoPlay, play])
+
+  useEffect(() => {
+    if (autoPlay === "inView" && inView) play()
+  }, [autoPlay, inView, play])
+
+  const firstSignal = useRef(true)
+  useEffect(() => {
+    if (playSignal === undefined) return
+    if (firstSignal.current) {
+      firstSignal.current = false
+      return
+    }
+    play()
+  }, [playSignal, play])
+
+  return (
+    <motion.svg ref={svgRef} viewBox="0 60 1024 950" className={className} aria-hidden>
+      <g fill="none" strokeLinecap="round" strokeLinejoin="round">
+        {/* 1: right fingers (mirrored front), furthest back */}
+        <motion.g style={{ x: xR }}>
+          <g ref={rightRot0}>
+            <g transform={MIRROR}>
+              <MorphLayer
+                a={RIGHT_FRONT_LONG}
+                b={RIGHT_FRONT_TUCK}
+                fillA={LEFT_FRONT_FILL_LONG}
+                fillB={LEFT_FRONT_FILL_TUCK}
+                fold={fold}
+              />
+            </g>
+          </g>
+        </motion.g>
+        {/* 2: left thumb; its dome folds flat at the clasp */}
+        <motion.g style={{ x: xL }}>
+          <g ref={leftRot0}>
+            <MorphLayer
+              a={LEFT_BACK}
+              b={LEFT_BACK_TUCK}
+              fillA={LEFT_BACK_FILL}
+              fillB={LEFT_BACK_FILL_TUCK}
+              fold={fold}
+            />
+          </g>
+        </motion.g>
+        {/* 2b: right palm band, under the left fingers */}
+        <motion.g style={{ x: xR }}>
+          <g ref={rightRot1}>
+            <g transform={MIRROR}>
+              <path d={RIGHT_BAND_FILL} fill={VERMILLION} stroke="none" />
+            </g>
+          </g>
+        </motion.g>
+        {/* 3: left fingers; they retract to the normal pose */}
+        <motion.g style={{ x: xL }}>
+          <g ref={leftRot1}>
+            <MorphLayer
+              a={LEFT_FRONT_LONG}
+              b={LEFT_FRONT}
+              fillA={LEFT_FRONT_FILL_LONG}
+              fillB={LEFT_FRONT_FILL}
+              fold={fold}
+            />
+          </g>
+        </motion.g>
+        {/* 4: right thumb (mirrored back, flight tail), topmost; static pose */}
+        <motion.g style={{ x: xR }}>
+          <g ref={rightRot2}>
+            <g transform={MIRROR}>
+              <path d={LEFT_BACK_REGION_FILL} fill={VERMILLION} stroke="none" />
+              <g stroke={VELLUM} strokeWidth={STROKE_WIDTH}>
+                {RIGHT_BACK_FLIGHT.map((d) => (
+                  <path key={d} d={d} />
+                ))}
+              </g>
+            </g>
+          </g>
+        </motion.g>
+      </g>
+    </motion.svg>
+  )
+}

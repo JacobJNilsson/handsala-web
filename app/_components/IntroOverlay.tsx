@@ -2,17 +2,14 @@
 
 import { useEffect, useRef, useState } from "react"
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion"
-import { HandshakeArt, runClaspSequence } from "./handshake-art"
+import ClaspAnimation from "./ClaspAnimation"
 
 const INTRO_KEY = "handsala-intro-played"
 
 export default function IntroOverlay() {
   const [visible, setVisible] = useState(true)
-  const [clasped, setClasped] = useState(false)
+  const [play, setPlay] = useState(false)
   const reduceMotion = useReducedMotion()
-  const left = useAnimationControls()
-  const right = useAnimationControls()
-  const body = useAnimationControls()
   const overlay = useAnimationControls()
   const finished = useRef(false)
 
@@ -41,18 +38,8 @@ export default function IntroOverlay() {
       return
     }
     document.body.style.overflow = "hidden"
-    let cancelled = false
-    const run = async () => {
-      await new Promise((r) => setTimeout(r, 400))
-      if (cancelled || finished.current) return
-      await runClaspSequence({ left, right, body, setClasped })
-      if (cancelled || finished.current) return
-      await new Promise((r) => setTimeout(r, 350))
-      finish.current(false)
-    }
-    run()
+    setPlay(true)
     return () => {
-      cancelled = true
       document.body.style.overflow = ""
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,13 +54,16 @@ export default function IntroOverlay() {
       className="fixed inset-0 z-[100] flex items-center overflow-hidden bg-vermillion"
     >
       <div className="noise" />
-      <HandshakeArt
-        clasped={clasped}
-        left={left}
-        right={right}
-        body={body}
-        className="block h-auto w-full text-vellum"
-      />
+      {play && (
+        <ClaspAnimation
+          autoPlay="mount"
+          speed={4}
+          onDone={() => {
+            window.setTimeout(() => finish.current(false), 350)
+          }}
+          className="block h-auto w-full"
+        />
+      )}
     </motion.div>
   )
 }

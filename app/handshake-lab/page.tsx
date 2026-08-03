@@ -211,50 +211,11 @@ export default function HandshakeLab() {
       </Panel>
 
       <Panel title="8 · Clasp demo, slow" note="reach, retract and fold, close, synced pump. Click to replay">
-        <ClaspDemo
-          back={LEFT_BACK}
-          backTuck={LEFT_BACK_TUCK}
-          backFillTuck={LEFT_BACK_FILL_TUCK}
-          backRight={RIGHT_BACK_FLIGHT}
-          front={LEFT_FRONT_MORPH}
-          frontR={RIGHT_FRONT_MORPH}
-          frontLong={LEFT_FRONT_LONG}
-          frontRLong={RIGHT_FRONT_LONG}
-          frontRTuck={RIGHT_FRONT_TUCK}
-          backFill={LEFT_BACK_FILL}
-          backRegionFill={LEFT_BACK_REGION_FILL}
-          bandFill={RIGHT_BAND_FILL}
-          frontFill={LEFT_FRONT_FILL}
-          frontFillLong={LEFT_FRONT_FILL_LONG}
-          frontTuck={LEFT_FRONT_TUCK}
-          frontFillTuck={LEFT_FRONT_FILL_TUCK}
-          mirror={MIRROR}
-          width={63.5}
-        />
+        <ClaspDemo speed={1} />
       </Panel>
 
       <Panel title="9 · Clasp demo, full speed" note="the same sequence at real speed. Click to replay">
-        <ClaspDemo
-          back={LEFT_BACK}
-          backTuck={LEFT_BACK_TUCK}
-          backFillTuck={LEFT_BACK_FILL_TUCK}
-          backRight={RIGHT_BACK_FLIGHT}
-          front={LEFT_FRONT_MORPH}
-          frontR={RIGHT_FRONT_MORPH}
-          frontLong={LEFT_FRONT_LONG}
-          frontRLong={RIGHT_FRONT_LONG}
-          frontRTuck={RIGHT_FRONT_TUCK}
-          backFill={LEFT_BACK_FILL}
-          backRegionFill={LEFT_BACK_REGION_FILL}
-          bandFill={RIGHT_BAND_FILL}
-          frontFill={LEFT_FRONT_FILL}
-          frontFillLong={LEFT_FRONT_FILL_LONG}
-          frontTuck={LEFT_FRONT_TUCK}
-          frontFillTuck={LEFT_FRONT_FILL_TUCK}
-          mirror={MIRROR}
-          width={63.5}
-          speed={4}
-        />
+        <ClaspDemo speed={4} />
       </Panel>
     </main>
   )
