@@ -72,7 +72,7 @@ export default function HeroSection() {
                     never reflows while a rune shows on top. */}
                 <span className={isRune ? "invisible" : undefined}>{letter}</span>
                 {isRune && (
-                  <span aria-hidden className="absolute inset-0 text-center">
+                  <span aria-hidden className="absolute left-1/2 top-0 -translate-x-1/2">
                     {RUNES[letter.toUpperCase()]}
                   </span>
                 )}
