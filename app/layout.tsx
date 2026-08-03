@@ -1,5 +1,6 @@
 import "./globals.css"
 import { NavMenu } from "@/components/ui/nav-menu"
+import GrainTuner from "./_components/GrainTuner"
 import { Archivo, Roboto_Mono } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Metadata } from 'next/types'
@@ -57,10 +58,11 @@ export default async function RootLayout({
     >
       <body className={archivo.className}>
         <div className="noise" />
-        <div className="content min-h-screen text-ink selection:bg-vermillion selection:text-vellum">
+        <div className="content min-h-screen text-ink">
           <NavMenu />
           {children}
         </div>
+        {process.env.NODE_ENV === "development" && <GrainTuner />}
       </body>
     </html>
   )

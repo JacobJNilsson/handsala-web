@@ -1,58 +1,61 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { motion, useAnimationControls, useReducedMotion } from "framer-motion"
-import { HandshakeArt, runClaspSequence } from "./handshake-art"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
+import { animate, motion, useMotionValue, useReducedMotion } from "framer-motion"
+import ClaspAnimation from "./ClaspAnimation"
 
-const INTRO_KEY = "handsala-intro-played"
+/* The skip check must run before the first paint, or a skipped intro
+   still flashes one orange frame. */
+const useBeforePaint = typeof window !== "undefined" ? useLayoutEffect : useEffect
+
+/* Module scope: survives route changes, resets on a full page load.
+   The intro greets every real entry to the site, but does not replay
+   when the visitor navigates back to the front page. */
+let playedThisPageLoad = false
 
 export default function IntroOverlay() {
   const [visible, setVisible] = useState(true)
-  const [clasped, setClasped] = useState(false)
+  const [play, setPlay] = useState(false)
+  const [armExtend, setArmExtend] = useState(0)
   const reduceMotion = useReducedMotion()
-  const left = useAnimationControls()
-  const right = useAnimationControls()
-  const body = useAnimationControls()
-  const overlay = useAnimationControls()
+  const overlayY = useMotionValue(0)
   const finished = useRef(false)
 
   const finish = useRef(async (skip: boolean) => {
     if (finished.current) return
     finished.current = true
-    try {
-      window.sessionStorage.setItem(INTRO_KEY, "1")
-    } catch {}
+    playedThisPageLoad = true
     document.body.style.overflow = ""
-    await overlay.start({
-      y: "-100%",
-      transition: { duration: skip ? 0.35 : 0.6, ease: [0.76, 0, 0.24, 1] },
+    await animate(overlayY, -window.innerHeight * 1.02, {
+      duration: skip ? 0.35 : 0.6,
+      ease: [0.76, 0, 0.24, 1],
     })
     setVisible(false)
   })
 
-  useEffect(() => {
-    let played = false
-    try {
-      played = Boolean(window.sessionStorage.getItem(INTRO_KEY))
-    } catch {}
-    if (played || reduceMotion) {
+  useBeforePaint(() => {
+    // a full page load resets the module flag, so navigation from an
+    // own page (for example the blog) must not replay the intro; a
+    // reload or a real entry from outside still plays it
+    const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined
+    const type = nav?.type ?? "navigate"
+    const internal = document.referrer.startsWith(window.location.origin)
+    const skip = type === "back_forward" || (type === "navigate" && internal)
+    if (playedThisPageLoad || skip || reduceMotion) {
       finished.current = true
       setVisible(false)
       return
     }
     document.body.style.overflow = "hidden"
-    let cancelled = false
-    const run = async () => {
-      await new Promise((r) => setTimeout(r, 400))
-      if (cancelled || finished.current) return
-      await runClaspSequence({ left, right, body, setClasped })
-      if (cancelled || finished.current) return
-      await new Promise((r) => setTimeout(r, 350))
-      finish.current(false)
-    }
-    run()
+    // measure how far the viewport reaches past the scene box, so the
+    // arm lines can end outside the view at any window size
+    const vw = window.innerWidth
+    const vh = window.innerHeight
+    const boxW = Math.min(vw, (vh * 1024) / 950)
+    const overhang = Math.max(0, (vw - boxW) / 2 / (boxW / 1024))
+    setArmExtend(overhang + 126)
+    setPlay(true)
     return () => {
-      cancelled = true
       document.body.style.overflow = ""
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -62,18 +65,23 @@ export default function IntroOverlay() {
 
   return (
     <motion.div
-      animate={overlay}
+      style={{ y: overlayY }}
       onClick={() => finish.current(true)}
-      className="fixed inset-0 z-[100] flex items-center overflow-hidden bg-vermillion"
+      className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-vermillion"
     >
       <div className="noise" />
-      <HandshakeArt
-        clasped={clasped}
-        left={left}
-        right={right}
-        body={body}
-        className="block h-auto w-full text-vellum"
-      />
+      {play && (
+        <ClaspAnimation
+          autoPlay="mount"
+          speed={4}
+          overshoot
+          armExtend={armExtend}
+          onDone={() => {
+            window.setTimeout(() => finish.current(false), 350)
+          }}
+          className="block h-auto w-[min(100vw,107.8vh)] overflow-visible"
+        />
+      )}
     </motion.div>
   )
 }

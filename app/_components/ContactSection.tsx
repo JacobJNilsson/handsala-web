@@ -44,9 +44,6 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="relative overflow-hidden bg-vermillion pb-28 pt-16 text-vellum">
-      <div className="mb-10">
-        <HandshakeClasp playSignal={playSignal} onShake={shake} />
-      </div>
       <div className="relative mx-auto max-w-[90rem] px-6 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -55,19 +52,24 @@ export default function ContactSection() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="mb-14 border-t-2 border-vellum/40 pt-4">
-            <button
-              type="button"
-              onClick={shake}
-              className="block text-left"
-              aria-label="Shake hands"
-            >
-              <h2
-                ref={headingRef}
-                className="display-serif max-w-4xl text-[clamp(2.6rem,8vw,7.5rem)] leading-[0.95] text-vellum"
+            <div className="flex items-center justify-between gap-8">
+              <button
+                type="button"
+                onClick={shake}
+                className="block text-left"
+                aria-label="Shake hands"
               >
-                Let&apos;s <em className="italic">shake</em> on&nbsp;it.
-              </h2>
-            </button>
+                <h2
+                  ref={headingRef}
+                  className="display-serif max-w-4xl text-[clamp(2.6rem,8vw,7.5rem)] leading-[0.95] text-vellum"
+                >
+                  Let&apos;s <em className="italic">shake</em> on&nbsp;it.
+                </h2>
+              </button>
+              <div className="hidden w-44 shrink-0 sm:block md:w-60">
+                <HandshakeClasp playSignal={playSignal} onShake={shake} />
+              </div>
+            </div>
             {shakes !== null && shakes > 0 && (
               <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.25em] text-vellum/70">
                 handshakes so far: {shakes}

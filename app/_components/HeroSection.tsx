@@ -64,11 +64,18 @@ export default function HeroSection() {
                 onFocus={() => touch(i)}
                 onBlur={() => setHovered(null)}
                 onClick={() => touch(i)}
-                className={`[font:inherit] cursor-default transition-colors duration-150 ${
-                  isRune ? "text-vermillion-bright" : "text-vellum"
+                className={`relative [font:inherit] cursor-default transition-colors duration-150 ${
+                  isRune ? "z-10 text-vermillion-bright" : "text-vellum"
                 }`}
               >
-                {isRune ? RUNES[letter.toUpperCase()] : letter}
+                {/* The latin letter always keeps its space, so the word
+                    never reflows while a rune shows on top. */}
+                <span className={isRune ? "invisible" : undefined}>{letter}</span>
+                {isRune && (
+                  <span aria-hidden className="absolute left-1/2 top-0 -translate-x-1/2">
+                    {RUNES[letter.toUpperCase()]}
+                  </span>
+                )}
               </motion.button>
             )
           })}
