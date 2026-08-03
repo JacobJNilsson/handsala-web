@@ -34,7 +34,14 @@ export default function IntroOverlay() {
   })
 
   useBeforePaint(() => {
-    if (playedThisPageLoad || reduceMotion) {
+    // a full page load resets the module flag, so navigation from an
+    // own page (for example the blog) must not replay the intro; a
+    // reload or a real entry from outside still plays it
+    const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined
+    const type = nav?.type ?? "navigate"
+    const internal = document.referrer.startsWith(window.location.origin)
+    const skip = type === "back_forward" || (type === "navigate" && internal)
+    if (playedThisPageLoad || skip || reduceMotion) {
       finished.current = true
       setVisible(false)
       return

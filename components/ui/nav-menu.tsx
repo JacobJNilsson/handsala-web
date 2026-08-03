@@ -27,7 +27,7 @@ export function NavMenu() {
 
   return (
     <nav
-      className={`fixed z-50 w-full transition-all duration-300 ${
+      className={`fixed z-[35] w-full transition-all duration-300 ${
         scrolled
           ? "border-b-2 border-ink bg-vellum py-3"
           : "bg-transparent py-6"
