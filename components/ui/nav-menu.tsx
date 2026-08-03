@@ -10,35 +10,36 @@ export function NavMenu() {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const isHomePage = pathname === "/"
+  const onInk = isHomePage && !scrolled
 
   useEffect(() => {
-    const handleScroll = () => {
-      const isScrolled = window.scrollY > 20
-      setScrolled(isScrolled)
-    }
-
+    const handleScroll = () => setScrolled(window.scrollY > 20)
+    handleScroll()
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Create links that point to sections on the home page
-  const getHomeLink = (section: string) => {
-    return isHomePage ? `#${section}` : `/#${section}`
-  }
+  const getHomeLink = (section: string) => (isHomePage ? `#${section}` : `/#${section}`)
+
+  const linkClass = `relative text-xs font-medium uppercase tracking-[0.25em] transition-colors after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0 after:bg-vermillion-bright after:transition-all after:duration-300 hover:after:w-full ${
+    onInk ? "text-vellum/80 hover:text-vellum" : "text-ink hover:text-vermillion"
+  }`
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-300 font-mono ${
+      className={`fixed z-50 w-full transition-all duration-300 ${
         scrolled
-        ? "bg-background/80 backdrop-blur-md border-b border-slate-800/5 py-4"
-        : "bg-transparent py-6"
+          ? "border-b-2 border-ink bg-vellum py-3"
+          : "bg-transparent py-6"
       }`}
     >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[90rem] px-6 sm:px-10">
         <div className="flex items-center justify-between">
           <Link
             href={getHomeLink("home")}
-            className="text-xl font-bold text-slate-800 hover:opacity-70 transition-opacity tracking-tight"
+            className={`font-mono text-xl font-bold tracking-tight transition-colors ${
+              onInk ? "text-vellum hover:text-vermillion-bright" : "text-ink hover:text-vermillion"
+            }`}
           >
             Handsala
           </Link>
@@ -46,7 +47,7 @@ export function NavMenu() {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-slate-800 hover:bg-slate-800/5 p-2 rounded-md transition-colors"
+            className={`p-2 transition-colors md:hidden ${onInk ? "text-vellum" : "text-ink"}`}
             aria-label="Toggle menu"
           >
             <svg
@@ -67,25 +68,10 @@ export function NavMenu() {
           </button>
 
           {/* Desktop menu */}
-          <div className="hidden md:flex space-x-8 text-sm">
-            <Link
-              href={getHomeLink("products")}
-              className="text-slate-800 hover:text-slate-600 transition-colors uppercase tracking-wider"
-            >
-              Products
-            </Link>
-            <Link
-              href="/blog"
-              className="text-slate-800 hover:text-slate-600 transition-colors uppercase tracking-wider"
-            >
-              Blog
-            </Link>
-            <Link
-              href={getHomeLink("contact")}
-              className="text-slate-800 hover:text-slate-600 transition-colors uppercase tracking-wider"
-            >
-              Contact
-            </Link>
+          <div className="hidden items-center gap-10 md:flex">
+            <Link href={getHomeLink("products")} className={linkClass}>Work</Link>
+            <Link href="/blog" className={linkClass}>Blog</Link>
+            <Link href={getHomeLink("contact")} className={linkClass}>Contact</Link>
           </div>
         </div>
 
@@ -93,34 +79,19 @@ export function NavMenu() {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              className="md:hidden overflow-hidden"
+              className="overflow-hidden md:hidden"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="px-2 pt-2 pb-3 space-y-1 bg-card border border-slate-200 shadow-lg rounded-lg mt-2 font-mono text-sm">
-                <Link
-                  href={getHomeLink("products")}
-                  className="relative block px-4 py-3 text-slate-800 uppercase tracking-wider after:absolute after:bottom-2 after:left-4 after:h-[1px] after:bg-slate-400 after:w-0 hover:after:w-[calc(100%-2rem)] after:transition-all after:duration-300 after:ease-out"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Products
-                </Link>
-                <Link
-                  href="/blog"
-                  className="relative block px-4 py-3 text-slate-800 uppercase tracking-wider after:absolute after:bottom-2 after:left-4 after:h-[1px] after:bg-slate-400 after:w-0 hover:after:w-[calc(100%-2rem)] after:transition-all after:duration-300 after:ease-out"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Blog
-                </Link>
-                <Link
-                  href={getHomeLink("contact")}
-                  className="relative block px-4 py-3 text-slate-800 uppercase tracking-wider after:absolute after:bottom-2 after:left-4 after:h-[1px] after:bg-slate-400 after:w-0 hover:after:w-[calc(100%-2rem)] after:transition-all after:duration-300 after:ease-out"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Contact
-                </Link>
+              <div
+                className="mt-3 flex flex-col gap-1 border-2 border-ink bg-vellum p-4"
+                onClick={() => setIsOpen(false)}
+              >
+                <Link href={getHomeLink("products")} className="px-2 py-3 text-sm font-medium uppercase tracking-[0.25em] text-ink hover:text-vermillion">Work</Link>
+                <Link href="/blog" className="px-2 py-3 text-sm font-medium uppercase tracking-[0.25em] text-ink hover:text-vermillion">Blog</Link>
+                <Link href={getHomeLink("contact")} className="px-2 py-3 text-sm font-medium uppercase tracking-[0.25em] text-ink hover:text-vermillion">Contact</Link>
               </div>
             </motion.div>
           )}
