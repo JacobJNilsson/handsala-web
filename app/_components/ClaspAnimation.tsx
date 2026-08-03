@@ -86,6 +86,7 @@ export default function ClaspAnimation({
   autoPlay = "inView",
   playSignal,
   signalAction = "replay",
+  overshoot = false,
   onDone,
   className,
 }: {
@@ -93,11 +94,15 @@ export default function ClaspAnimation({
   autoPlay?: "mount" | "inView"
   playSignal?: number
   signalAction?: "replay" | "pump"
+  /* Start the hands beyond the browser viewport, not just beyond the
+     scene box. For a full-screen intro whose svg overflows visibly. */
+  overshoot?: boolean
   onDone?: () => void
   className?: string
 }) {
-  const xL = useMotionValue(-720)
-  const xR = useMotionValue(720)
+  const restStart = overshoot ? 2400 : 720
+  const xL = useMotionValue(-restStart)
+  const xR = useMotionValue(restStart)
   const fold = useMotionValue(0)
   const angL = useMotionValue(0)
   const angR = useMotionValue(0)
@@ -153,8 +158,19 @@ export default function ClaspAnimation({
       doneRef.current?.()
       return
     }
-    xL.set(-720)
-    xR.set(720)
+    // with overshoot, measure how far the viewport extends past the
+    // scene box, so the hands start outside the browser window
+    let start = 720
+    if (overshoot && svgRef.current) {
+      const rect = svgRef.current.getBoundingClientRect()
+      if (rect.width > 0) {
+        const scale = rect.width / 1024
+        const overhang = Math.max(rect.left, window.innerWidth - rect.right, 0) / scale
+        start = 720 + overhang + 40
+      }
+    }
+    xL.set(-start)
+    xR.set(start)
     fold.set(0)
     angL.set(0)
     angR.set(0)
@@ -183,7 +199,7 @@ export default function ClaspAnimation({
     await runPump()
     if (!alive()) return
     doneRef.current?.()
-  }, [xL, xR, fold, angL, angR, speed, reduceMotion, runPump])
+  }, [xL, xR, fold, angL, angR, speed, reduceMotion, runPump, overshoot])
 
   useEffect(() => {
     const ls = [leftRot0, leftRot1]

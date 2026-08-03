@@ -52,17 +52,18 @@ export default function IntroOverlay() {
     <motion.div
       animate={overlay}
       onClick={() => finish.current(true)}
-      className="fixed inset-0 z-[100] flex items-center overflow-hidden bg-vermillion"
+      className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-vermillion"
     >
       <div className="noise" />
       {play && (
         <ClaspAnimation
           autoPlay="mount"
           speed={4}
+          overshoot
           onDone={() => {
             window.setTimeout(() => finish.current(false), 350)
           }}
-          className="block h-auto w-full"
+          className="block h-auto w-[min(100vw,107.8vh)] overflow-visible"
         />
       )}
     </motion.div>
