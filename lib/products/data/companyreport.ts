@@ -9,6 +9,7 @@ export const companyreport: Product = {
   image: '/images/blog/company-report.png',
   imageAlt: 'CompanyReport.ai landing page screenshot',
   url: 'https://companyreport.ai',
+  marginNote: 'Named with the same imagination as the puzzle game below.',
   features: [
     'Testing market demand for automated company analysis',
     'Collecting feedback on desired features and insights',

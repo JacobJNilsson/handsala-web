@@ -9,6 +9,7 @@ export const palette: Product = {
   image: '/palette-filled-game.png',
   imageAlt: 'Screenshot of Pallet game showing filled puzzle state',
   url: '/palette',
+  marginNote: 'Runs on Knuth\'s Dancing Links, the best-named algorithm in computer science.',
   features: [
     'Fresh puzzles daily (I don\'t sleep, I generate puzzles)',
     'Multiple grid sizes for when you\'re feeling extra smart',

@@ -64,6 +64,12 @@ export default function ProductsSection() {
               >
                 <div className="md:col-span-2">
                   <IndexNumber n={index + 1} />
+                  {product.marginNote && (
+                    <p className="mt-5 hidden max-w-[18ch] font-display text-sm italic leading-snug text-ink-faint md:block">
+                      <span aria-hidden className="not-italic text-vermillion">† </span>
+                      {product.marginNote}
+                    </p>
+                  )}
                 </div>
 
                 <div className={`md:col-span-5 ${flipped ? "md:order-3" : ""}`}>

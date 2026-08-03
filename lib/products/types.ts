@@ -9,6 +9,8 @@ export interface Product {
   url: string;
   features: string[];
   technologies: Technology[];
+  /* A scribal aside, shown in the page margin next to the entry. */
+  marginNote?: string;
 }
 
 export interface Technology {
