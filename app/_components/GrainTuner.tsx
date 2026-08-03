@@ -7,10 +7,10 @@ import { useEffect, useState } from "react"
    panel and set them in globals.css when they look right. */
 export default function GrainTuner() {
   const [open, setOpen] = useState(false)
-  const [opacity, setOpacity] = useState(0.15)
-  const [size, setSize] = useState(1100)
-  const [freq, setFreq] = useState(1.9)
-  const [octaves, setOctaves] = useState(3)
+  const [opacity, setOpacity] = useState(0.14)
+  const [size, setSize] = useState(900)
+  const [freq, setFreq] = useState(1)
+  const [octaves, setOctaves] = useState(1)
 
   useEffect(() => {
     const svg = `<svg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'><filter id='noiseFilter'><feTurbulence type='fractalNoise' baseFrequency='${freq}' numOctaves='${octaves}' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(#noiseFilter)'/></svg>`
