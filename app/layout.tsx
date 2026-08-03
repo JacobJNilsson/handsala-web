@@ -1,20 +1,30 @@
 import "./globals.css"
 import { NavMenu } from "@/components/ui/nav-menu"
-import { Roboto, Roboto_Mono } from 'next/font/google'
+import { Archivo, Roboto_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Metadata } from 'next/types'
-import { Suspense } from "react"
 
-const roboto = Roboto({
-  weight: ['400', '500', '700'],
+/* Editorial serif (Sentient, Fontshare ITF license) in the Editorial New role */
+const sentient = localFont({
+  src: [
+    { path: './fonts/Sentient-Variable.woff2', weight: '200 700', style: 'normal' },
+    { path: './fonts/Sentient-VariableItalic.woff2', weight: '200 700', style: 'italic' },
+  ],
+  display: 'swap',
+  variable: '--font-display',
+})
+
+/* Neutral grotesk in the Neue Haas role */
+const archivo = Archivo({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-roboto',
+  variable: '--font-sans',
 })
 
 const robotoMono = Roboto_Mono({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-roboto-mono',
+  variable: '--font-mono',
 })
 
 export const metadata: Metadata = {
@@ -40,10 +50,14 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${roboto.variable} ${robotoMono.variable}`} suppressHydrationWarning>
-      <body className={robotoMono.className}>
+    <html
+      lang="en"
+      className={`${sentient.variable} ${archivo.variable} ${robotoMono.variable}`}
+      suppressHydrationWarning
+    >
+      <body className={archivo.className}>
         <div className="noise" />
-        <div className="content min-h-screen text-slate-800 selection:bg-slate-200">
+        <div className="content min-h-screen text-ink selection:bg-vermillion selection:text-vellum">
           <NavMenu />
           {children}
         </div>

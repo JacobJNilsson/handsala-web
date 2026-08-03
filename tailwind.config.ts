@@ -11,7 +11,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-				// Minimalistic Beige Palette
+				// Saga manuscript palette (OKLCH)
+				vellum: {
+					DEFAULT: 'oklch(94.5% 0.021 85 / <alpha-value>)',
+					deep: 'oklch(90% 0.032 83 / <alpha-value>)',
+					dark: 'oklch(84% 0.04 82 / <alpha-value>)',
+				},
+				ink: {
+					DEFAULT: 'oklch(24% 0.028 270 / <alpha-value>)',
+					soft: 'oklch(33% 0.03 270 / <alpha-value>)',
+					faint: 'oklch(45% 0.025 270 / <alpha-value>)',
+				},
+				oxblood: {
+					DEFAULT: 'oklch(41% 0.135 27 / <alpha-value>)',
+					deep: 'oklch(33% 0.115 27 / <alpha-value>)',
+				},
+				vermillion: {
+					DEFAULT: 'oklch(55% 0.185 33 / <alpha-value>)',
+					bright: 'oklch(62% 0.19 36 / <alpha-value>)',
+				},
+				ochre: 'oklch(71% 0.105 75 / <alpha-value>)',
+				gold: {
+					DEFAULT: 'oklch(80% 0.105 85 / <alpha-value>)',
+					pale: 'oklch(87% 0.07 88 / <alpha-value>)',
+				},
+				moss: 'oklch(47% 0.075 140 / <alpha-value>)',
+
+				// Legacy scales kept for the blog & older pages
 				beige: {
 					50: '#fdfbf7',
 					100: '#f7f3e8',
@@ -20,57 +46,60 @@ const config: Config = {
 					400: '#dbb98e',
 					500: '#d2a072',
 					600: '#c5865a',
-					700: '#a46a48', // Text/Accent
+					700: '#a46a48',
 					800: '#87563e',
 					900: '#6d4633',
 				},
 				slate: {
-					800: '#1e293b',
-					900: '#0f172a',
+					800: '#2a2d3f',
+					900: '#1c1f2e',
 				},
-				// Mapping old specific colors to new theme (soft migration or direct replacement)
-				cornflowerBlue: '#2d3748', // Replace blue with dark slate for text/headers to be "dev minimalistic"
-				orangeRed: '#e53e3e',
 
-				background: '#f8eedbff', // usage: bg-background
-				foreground: '#1e293b', // usage: text-foreground
-				muted: '#64748b',
+				background: 'oklch(94.5% 0.021 85 / <alpha-value>)', // usage: bg-background
+				foreground: 'oklch(24% 0.028 270 / <alpha-value>)', // usage: text-foreground
+				muted: 'oklch(45% 0.025 270 / <alpha-value>)',
 
   			card: {
-					DEFAULT: '#fdfbf7e4',
-					foreground: '#1e293b'
+					DEFAULT: 'oklch(96.5% 0.015 86 / <alpha-value>)',
+					foreground: 'oklch(24% 0.028 270 / <alpha-value>)'
   			},
   			popover: {
-					DEFAULT: '#ffffff',
-					foreground: '#1e293b'
+					DEFAULT: 'oklch(96.5% 0.015 86 / <alpha-value>)',
+					foreground: 'oklch(24% 0.028 270 / <alpha-value>)'
   			},
   			primary: {
-					DEFAULT: '#1e293b',
-					foreground: '#fdfbf7'
+					DEFAULT: 'oklch(24% 0.028 270 / <alpha-value>)',
+					foreground: 'oklch(94.5% 0.021 85 / <alpha-value>)'
   			},
   			secondary: {
-					DEFAULT: '#efe5d1',
-					foreground: '#1e293b'
+					DEFAULT: 'oklch(90% 0.032 83 / <alpha-value>)',
+					foreground: 'oklch(24% 0.028 270 / <alpha-value>)'
   			},
   			accent: {
-					DEFAULT: '#d2a072',
-					foreground: '#fdfbf7'
+					DEFAULT: 'oklch(55% 0.185 33 / <alpha-value>)',
+					foreground: 'oklch(94.5% 0.021 85 / <alpha-value>)'
   			},
   			destructive: {
-					DEFAULT: '#ef4444',
+					DEFAULT: '#c2483c',
 					foreground: '#fdfbf7'
   			},
-				border: '#e2e8f0',
-				input: '#e2e8f0',
-				ring: '#cbd5e1',
+				border: 'oklch(84% 0.04 82 / <alpha-value>)',
+				input: 'oklch(84% 0.04 82 / <alpha-value>)',
+				ring: 'oklch(55% 0.185 33 / <alpha-value>)',
   			chart: {
-					'1': '#64748b',
-					'2': '#94a3b8',
-					'3': '#cbd5e1',
-					'4': '#e2e8f0',
-					'5': '#f1f5f9'
+					'1': 'oklch(41% 0.135 27 / <alpha-value>)',
+					'2': 'oklch(71% 0.105 75 / <alpha-value>)',
+					'3': 'oklch(47% 0.075 140 / <alpha-value>)',
+					'4': 'oklch(33% 0.03 270 / <alpha-value>)',
+					'5': 'oklch(80% 0.105 85 / <alpha-value>)'
   			}
   		},
+			fontFamily: {
+				display: ['var(--font-display)', 'Georgia', 'serif'],
+				serif: ['var(--font-display)', 'Georgia', 'serif'],
+				sans: ['var(--font-sans)', 'Helvetica', 'Arial', 'sans-serif'],
+				mono: ['var(--font-mono)', 'monospace'],
+			},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
