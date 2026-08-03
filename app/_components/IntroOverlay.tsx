@@ -1,10 +1,17 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion"
 import ClaspAnimation from "./ClaspAnimation"
 
-const INTRO_KEY = "handsala-intro-played"
+/* The skip check must run before the first paint, or a skipped intro
+   still flashes one orange frame. */
+const useBeforePaint = typeof window !== "undefined" ? useLayoutEffect : useEffect
+
+/* Module scope: survives route changes, resets on a full page load.
+   The intro greets every real entry to the site, but does not replay
+   when the visitor navigates back to the front page. */
+let playedThisPageLoad = false
 
 export default function IntroOverlay() {
   const [visible, setVisible] = useState(true)
@@ -16,9 +23,7 @@ export default function IntroOverlay() {
   const finish = useRef(async (skip: boolean) => {
     if (finished.current) return
     finished.current = true
-    try {
-      window.sessionStorage.setItem(INTRO_KEY, "1")
-    } catch {}
+    playedThisPageLoad = true
     document.body.style.overflow = ""
     await overlay.start({
       y: "-100%",
@@ -27,12 +32,8 @@ export default function IntroOverlay() {
     setVisible(false)
   })
 
-  useEffect(() => {
-    let played = false
-    try {
-      played = Boolean(window.sessionStorage.getItem(INTRO_KEY))
-    } catch {}
-    if (played || reduceMotion) {
+  useBeforePaint(() => {
+    if (playedThisPageLoad || reduceMotion) {
       finished.current = true
       setVisible(false)
       return

@@ -24,6 +24,23 @@ import {
 const VELLUM = "oklch(94.5% 0.021 85)"
 const VERMILLION = "oklch(55% 0.185 33)"
 
+/* The right thumb's tail ends on the left hand's line (anchor point
+   A.11). During the pump the two hands rotate around different pivots,
+   so the tail's end point follows the left hand to keep the lines
+   joined. */
+const RIGHT_THUMB_BASE = RIGHT_BACK_FLIGHT[0].slice(0, RIGHT_BACK_FLIGHT[0].lastIndexOf(" L "))
+const ANCHOR_X = 584.1
+const ANCHOR_Y = 361.5
+
+function rotatePoint(x: number, y: number, cx: number, cy: number, deg: number): [number, number] {
+  const r = (deg * Math.PI) / 180
+  const c = Math.cos(r)
+  const s = Math.sin(r)
+  const dx = x - cx
+  const dy = y - cy
+  return [cx + dx * c - dy * s, cy + dx * s + dy * c]
+}
+
 /* One path that morphs from pose A (fold 0) to pose B (fold 1).
    Both poses share one path command structure, so d interpolates
    cleanly. Motion values drive the morph directly; the component
@@ -68,12 +85,14 @@ export default function ClaspAnimation({
   speed = 4,
   autoPlay = "inView",
   playSignal,
+  signalAction = "replay",
   onDone,
   className,
 }: {
   speed?: number
   autoPlay?: "mount" | "inView"
   playSignal?: number
+  signalAction?: "replay" | "pump"
   onDone?: () => void
   className?: string
 }) {
@@ -95,6 +114,33 @@ export default function ClaspAnimation({
   useEffect(() => {
     doneRef.current = onDone
   })
+
+  // world position of the anchored tail end, mapped back into the right
+  // thumb layer's own space through both pump rotations and the mirror
+  const rightThumbD = useTransform([angL, angR], (latest: number[]) => {
+    const [wx, wy] = rotatePoint(ANCHOR_X, ANCHOR_Y, 60, 630, latest[0])
+    const [ux, uy] = rotatePoint(wx, wy, 1007, 630, -latest[1])
+    return `${RIGHT_THUMB_BASE} L ${(1067.1 - ux).toFixed(2)} ${uy.toFixed(2)}`
+  })
+
+  const runPump = useCallback(
+    () =>
+      Promise.all([
+        animate(angL, [0, 7, -2.2, 0], { duration: Math.max(0.7 / speed, 0.5), times: [0, 0.4, 0.75, 1], ease: "easeInOut" }),
+        animate(angR, [0, -7, 2.2, 0], { duration: Math.max(0.7 / speed, 0.5), times: [0, 0.4, 0.75, 1], ease: "easeInOut" }),
+      ]),
+    [angL, angR, speed],
+  )
+
+  // one extra shake on a closed clasp; no restart from the sides
+  const pump = useCallback(async () => {
+    if (fold.get() !== 1) return
+    angL.stop()
+    angR.stop()
+    angL.set(0)
+    angR.set(0)
+    await runPump()
+  }, [angL, angR, fold, runPump])
 
   const play = useCallback(async () => {
     const run = ++runId.current
@@ -134,13 +180,10 @@ export default function ClaspAnimation({
     ])
     if (!alive()) return
     // the shake: both hands pivot at their arm sides, synced, one firm pump
-    await Promise.all([
-      animate(angL, [0, 7, -2.2, 0], { duration: Math.max(0.7 / speed, 0.5), times: [0, 0.4, 0.75, 1], ease: "easeInOut" }),
-      animate(angR, [0, -7, 2.2, 0], { duration: Math.max(0.7 / speed, 0.5), times: [0, 0.4, 0.75, 1], ease: "easeInOut" }),
-    ])
+    await runPump()
     if (!alive()) return
     doneRef.current?.()
-  }, [xL, xR, fold, angL, angR, speed, reduceMotion])
+  }, [xL, xR, fold, angL, angR, speed, reduceMotion, runPump])
 
   useEffect(() => {
     const ls = [leftRot0, leftRot1]
@@ -169,8 +212,9 @@ export default function ClaspAnimation({
       firstSignal.current = false
       return
     }
-    play()
-  }, [playSignal, play])
+    if (signalAction === "pump") pump()
+    else play()
+  }, [playSignal, signalAction, pump, play])
 
   return (
     <motion.svg ref={svgRef} viewBox="0 60 1024 950" className={className} aria-hidden>
@@ -221,15 +265,14 @@ export default function ClaspAnimation({
             />
           </g>
         </motion.g>
-        {/* 4: right thumb (mirrored back, flight tail), topmost; static pose */}
+        {/* 4: right thumb (mirrored back, flight tail), topmost; its tail
+            end follows the left hand's anchor during the pump */}
         <motion.g style={{ x: xR }}>
           <g ref={rightRot2}>
             <g transform={MIRROR}>
               <path d={LEFT_BACK_REGION_FILL} fill={VERMILLION} stroke="none" />
               <g stroke={VELLUM} strokeWidth={STROKE_WIDTH}>
-                {RIGHT_BACK_FLIGHT.map((d) => (
-                  <path key={d} d={d} />
-                ))}
+                <motion.path d={rightThumbD} />
               </g>
             </g>
           </g>
