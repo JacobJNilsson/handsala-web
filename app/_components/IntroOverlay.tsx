@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react"
-import { motion, useAnimationControls, useReducedMotion } from "framer-motion"
+import { animate, motion, useMotionValue, useReducedMotion } from "framer-motion"
 import ClaspAnimation from "./ClaspAnimation"
 
 /* The skip check must run before the first paint, or a skipped intro
@@ -18,7 +18,7 @@ export default function IntroOverlay() {
   const [play, setPlay] = useState(false)
   const [armExtend, setArmExtend] = useState(0)
   const reduceMotion = useReducedMotion()
-  const overlay = useAnimationControls()
+  const overlayY = useMotionValue(0)
   const finished = useRef(false)
 
   const finish = useRef(async (skip: boolean) => {
@@ -26,9 +26,9 @@ export default function IntroOverlay() {
     finished.current = true
     playedThisPageLoad = true
     document.body.style.overflow = ""
-    await overlay.start({
-      y: "-100%",
-      transition: { duration: skip ? 0.35 : 0.6, ease: [0.76, 0, 0.24, 1] },
+    await animate(overlayY, -window.innerHeight * 1.02, {
+      duration: skip ? 0.35 : 0.6,
+      ease: [0.76, 0, 0.24, 1],
     })
     setVisible(false)
   })
@@ -58,7 +58,7 @@ export default function IntroOverlay() {
 
   return (
     <motion.div
-      animate={overlay}
+      style={{ y: overlayY }}
       onClick={() => finish.current(true)}
       className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-vermillion"
     >
