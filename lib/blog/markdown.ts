@@ -20,6 +20,16 @@ export type BlogPost = {
   path: string; // The relative path to the markdown file (including subdirectories)
 };
 
+
+/**
+ * Estimate the reading time from the word count (200 words per minute)
+ */
+function estimateReadingTime(content: string): string {
+  const words = content.trim().split(/\s+/).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes} min read`;
+}
+
 /**
  * Get all blog posts, sorted by date
  */
@@ -79,7 +89,7 @@ export function getAllPostsSync(): BlogPost[] {
       author: data.author,
       category: data.category,
       tags: data.tags,
-      readingTime: data.readingTime,
+      readingTime: data.readingTime || estimateReadingTime(content),
       path: relativePath,
     };
   });
