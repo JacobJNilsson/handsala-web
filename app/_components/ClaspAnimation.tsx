@@ -41,6 +41,13 @@ function rotatePoint(x: number, y: number, cx: number, cy: number, deg: number):
   return [cx + dx * c - dy * s, cy + dx * s + dy * c]
 }
 
+/* Move an arm line's start cap outward, so it ends beyond the view.
+   Every arm chain starts with its cap point, and the left space maps
+   a smaller x to "further out" for both hands through the mirror. */
+function extendArm(d: string, ext: number): string {
+  return d.replace(/^M ([\d.]+)/, (_, x: string) => `M ${(parseFloat(x) - ext).toFixed(1)}`)
+}
+
 /* One path that morphs from pose A (fold 0) to pose B (fold 1).
    Both poses share one path command structure, so d interpolates
    cleanly. Motion values drive the morph directly; the component
@@ -87,6 +94,7 @@ export default function ClaspAnimation({
   playSignal,
   signalAction = "replay",
   overshoot = false,
+  armExtend = 0,
   onDone,
   className,
 }: {
@@ -97,12 +105,33 @@ export default function ClaspAnimation({
   /* Start the hands beyond the browser viewport, not just beyond the
      scene box. For a full-screen intro whose svg overflows visibly. */
   overshoot?: boolean
+  /* Extra length on the four arm lines, in artwork units. The parent
+     measures this so the arm end caps stay outside the view. */
+  armExtend?: number
   onDone?: () => void
   className?: string
 }) {
   const restStart = overshoot ? 2400 : 720
   const xL = useMotionValue(-restStart)
   const xR = useMotionValue(restStart)
+
+  /* With extended arms, the hands pivot at the arms' off-screen end
+     caps, not at the wrists. A smaller angle keeps the same travel at
+     the clasp, so the visible arms stay almost level in the shake. */
+  const pivotLx = armExtend ? 85 - armExtend : 60
+  const pivotRx = armExtend ? 938.5 + armExtend : 1007
+  const pumpScale = armExtend ? (511 - 60) / (511 - pivotLx) : 1
+
+  /* armExtend is fixed for the component's lifetime, so these stay
+     stable and the morph structure never changes. */
+  const arm = (paths: string[]) => (armExtend ? [extendArm(paths[0], armExtend), ...paths.slice(1)] : paths)
+  const leftBack = arm(LEFT_BACK)
+  const leftBackTuck = arm(LEFT_BACK_TUCK)
+  const leftFront = arm(LEFT_FRONT)
+  const leftFrontLong = arm(LEFT_FRONT_LONG)
+  const rightFrontLong = arm(RIGHT_FRONT_LONG)
+  const rightFrontTuck = arm(RIGHT_FRONT_TUCK)
+  const thumbBase = armExtend ? extendArm(RIGHT_THUMB_BASE, armExtend) : RIGHT_THUMB_BASE
   const fold = useMotionValue(0)
   const angL = useMotionValue(0)
   const angR = useMotionValue(0)
@@ -123,18 +152,18 @@ export default function ClaspAnimation({
   // world position of the anchored tail end, mapped back into the right
   // thumb layer's own space through both pump rotations and the mirror
   const rightThumbD = useTransform([angL, angR], (latest: number[]) => {
-    const [wx, wy] = rotatePoint(ANCHOR_X, ANCHOR_Y, 60, 630, latest[0])
-    const [ux, uy] = rotatePoint(wx, wy, 1007, 630, -latest[1])
-    return `${RIGHT_THUMB_BASE} L ${(1067.1 - ux).toFixed(2)} ${uy.toFixed(2)}`
+    const [wx, wy] = rotatePoint(ANCHOR_X, ANCHOR_Y, pivotLx, 630, latest[0])
+    const [ux, uy] = rotatePoint(wx, wy, pivotRx, 630, -latest[1])
+    return `${thumbBase} L ${(1067.1 - ux).toFixed(2)} ${uy.toFixed(2)}`
   })
 
   const runPump = useCallback(
     () =>
       Promise.all([
-        animate(angL, [0, 7, -2.2, 0], { duration: Math.max(0.7 / speed, 0.5), times: [0, 0.4, 0.75, 1], ease: "easeInOut" }),
-        animate(angR, [0, -7, 2.2, 0], { duration: Math.max(0.7 / speed, 0.5), times: [0, 0.4, 0.75, 1], ease: "easeInOut" }),
+        animate(angL, [0, 7 * pumpScale, -2.2 * pumpScale, 0], { duration: Math.max(0.7 / speed, 0.5), times: [0, 0.4, 0.75, 1], ease: "easeInOut" }),
+        animate(angR, [0, -7 * pumpScale, 2.2 * pumpScale, 0], { duration: Math.max(0.7 / speed, 0.5), times: [0, 0.4, 0.75, 1], ease: "easeInOut" }),
       ]),
-    [angL, angR, speed],
+    [angL, angR, speed, pumpScale],
   )
 
   // one extra shake on a closed clasp; no restart from the sides
@@ -205,13 +234,13 @@ export default function ClaspAnimation({
     const ls = [leftRot0, leftRot1]
     const rs = [rightRot0, rightRot1, rightRot2]
     const u1 = angL.on("change", (v) => {
-      for (const r of ls) r.current?.setAttribute("transform", `rotate(${v} 60 630)`)
+      for (const r of ls) r.current?.setAttribute("transform", `rotate(${v} ${pivotLx} 630)`)
     })
     const u2 = angR.on("change", (v) => {
-      for (const r of rs) r.current?.setAttribute("transform", `rotate(${v} 1007 630)`)
+      for (const r of rs) r.current?.setAttribute("transform", `rotate(${v} ${pivotRx} 630)`)
     })
     return () => { u1(); u2() }
-  }, [angL, angR])
+  }, [angL, angR, pivotLx, pivotRx])
 
   useEffect(() => {
     if (autoPlay === "mount") play()
@@ -240,8 +269,8 @@ export default function ClaspAnimation({
           <g ref={rightRot0}>
             <g transform={MIRROR}>
               <MorphLayer
-                a={RIGHT_FRONT_LONG}
-                b={RIGHT_FRONT_TUCK}
+                a={rightFrontLong}
+                b={rightFrontTuck}
                 fillA={LEFT_FRONT_FILL_LONG}
                 fillB={LEFT_FRONT_FILL_TUCK}
                 fold={fold}
@@ -253,8 +282,8 @@ export default function ClaspAnimation({
         <motion.g style={{ x: xL }}>
           <g ref={leftRot0}>
             <MorphLayer
-              a={LEFT_BACK}
-              b={LEFT_BACK_TUCK}
+              a={leftBack}
+              b={leftBackTuck}
               fillA={LEFT_BACK_FILL}
               fillB={LEFT_BACK_FILL_TUCK}
               fold={fold}
@@ -273,8 +302,8 @@ export default function ClaspAnimation({
         <motion.g style={{ x: xL }}>
           <g ref={leftRot1}>
             <MorphLayer
-              a={LEFT_FRONT_LONG}
-              b={LEFT_FRONT}
+              a={leftFrontLong}
+              b={leftFront}
               fillA={LEFT_FRONT_FILL_LONG}
               fillB={LEFT_FRONT_FILL}
               fold={fold}

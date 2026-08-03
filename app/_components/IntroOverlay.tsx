@@ -16,6 +16,7 @@ let playedThisPageLoad = false
 export default function IntroOverlay() {
   const [visible, setVisible] = useState(true)
   const [play, setPlay] = useState(false)
+  const [armExtend, setArmExtend] = useState(0)
   const reduceMotion = useReducedMotion()
   const overlay = useAnimationControls()
   const finished = useRef(false)
@@ -39,6 +40,13 @@ export default function IntroOverlay() {
       return
     }
     document.body.style.overflow = "hidden"
+    // measure how far the viewport reaches past the scene box, so the
+    // arm lines can end outside the view at any window size
+    const vw = window.innerWidth
+    const vh = window.innerHeight
+    const boxW = Math.min(vw, (vh * 1024) / 950)
+    const overhang = Math.max(0, (vw - boxW) / 2 / (boxW / 1024))
+    setArmExtend(overhang + 126)
     setPlay(true)
     return () => {
       document.body.style.overflow = ""
@@ -60,6 +68,7 @@ export default function IntroOverlay() {
           autoPlay="mount"
           speed={4}
           overshoot
+          armExtend={armExtend}
           onDone={() => {
             window.setTimeout(() => finish.current(false), 350)
           }}
