@@ -7,13 +7,13 @@ export default function Colophon() {
 
   return (
     <footer className="bg-ink px-6 py-12 text-vellum/55">
-      <div className="mx-auto flex max-w-[90rem] flex-wrap items-center justify-between gap-4 border-t border-vellum/15 pt-6 text-[11px] font-medium uppercase tracking-[0.25em]">
+      <div className="mx-auto grid max-w-[90rem] grid-cols-1 gap-4 border-t border-vellum/15 pt-6 text-[11px] font-medium uppercase tracking-[0.25em] sm:grid-cols-3 sm:items-center">
         <p>© {new Date().getFullYear()} Handsala AB</p>
-        <p>Set in Sentient &amp; Archivo</p>
+        <p className="sm:text-center">Set in Sentient &amp; Archivo</p>
         <button
           type="button"
           onClick={() => setFound(true)}
-          className="select-none text-base text-vellum/20 transition-colors hover:text-vellum/70"
+          className="select-none text-base text-vellum/20 transition-colors hover:text-vellum/70 sm:justify-self-end"
           aria-label="A stray character"
         >
           ᛟ
