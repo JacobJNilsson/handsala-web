@@ -13,8 +13,14 @@ const useBeforePaint = typeof window !== "undefined" ? useLayoutEffect : useEffe
    when the visitor navigates back to the front page. */
 let playedThisPageLoad = false
 
+/* The CSS bail-out (see globals.css) slides the overlay away after
+   this delay, with no JavaScript. Its clock starts at first paint,
+   so at performance.now() >= BAIL_MS the slide may already run. */
+const BAIL_MS = 4000
+
 export default function IntroOverlay() {
   const [visible, setVisible] = useState(true)
+  const [bail, setBail] = useState(true)
   const [play, setPlay] = useState(false)
   const [armExtend, setArmExtend] = useState(0)
   const reduceMotion = useReducedMotion()
@@ -46,6 +52,16 @@ export default function IntroOverlay() {
       setVisible(false)
       return
     }
+    /* Late hydration: the CSS bail-out may already slide the overlay
+       away. A replay would pop it back over content the visitor
+       reads. The visitor also waited long enough; show the page. */
+    if (performance.now() >= BAIL_MS) {
+      finished.current = true
+      playedThisPageLoad = true
+      setVisible(false)
+      return
+    }
+    setBail(false)
     document.body.style.overflow = "hidden"
     // measure how far the viewport reaches past the scene box, so the
     // arm lines can end outside the view at any window size
@@ -67,7 +83,9 @@ export default function IntroOverlay() {
     <motion.div
       style={{ y: overlayY }}
       onClick={() => finish.current(true)}
-      className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-vermillion"
+      className={`fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-vermillion${
+        bail ? " intro-bail" : ""
+      }`}
     >
       <div className="noise" />
       {play && (
