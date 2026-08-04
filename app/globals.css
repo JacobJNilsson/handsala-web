@@ -86,11 +86,31 @@
   animation: handshake 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Bail-out for the intro overlay. It runs on CSS alone, so a visitor
+   without JavaScript, or on a connection where the script is late,
+   still reaches the page. Hydration removes the class before the
+   delay ends, so a normal visit never sees it. The delay must match
+   BAIL_MS in IntroOverlay.tsx. */
+@keyframes intro-bail {
+  to {
+    transform: translateY(-102vh);
+    visibility: hidden;
+  }
+}
+
+.intro-bail {
+  animation: intro-bail 0.6s cubic-bezier(0.76, 0, 0.24, 1) 4s forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .handshake {
     animation: none;
+  }
+  .intro-bail {
+    animation-duration: 0.01s;
+    animation-delay: 1.5s;
   }
 }
