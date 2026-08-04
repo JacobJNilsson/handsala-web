@@ -3,15 +3,15 @@ import { Product } from '../types';
 export const palette: Product = {
   id: 'palette',
   title: 'Palette',
-  description: 'A passion project that asks: "What if Sudoku and coloring books had a baby?" It\'s a puzzle game with randomly generated areas where you fill in colors following specific rules. Each puzzle is unique, so you\'ll never get bored (or I\'ll give you your money back... wait, it\'s free).',
+  description: 'A passion project: Sudoku crossed with a coloring book. The board is split into random areas, and you fill them with colors that follow a set of rules. Every puzzle is generated fresh, so you never solve the same one twice.',
   category: 'Puzzle Game',
   categoryColor: 'bg-slate-700',
   image: '/palette-filled-game.png',
   imageAlt: 'Screenshot of a filled Palette puzzle',
   url: '/palette',
   features: [
-    'Fresh puzzles daily (I don\'t sleep, I generate puzzles)',
-    'Multiple grid sizes for when you\'re feeling extra smart',
+    'Fresh puzzles every day',
+    'Multiple grid sizes for when you\'re looking for a challenge',
     'Clean, colorful design with no mandatory ads or in-app purchases'
   ],
   technologies: [
