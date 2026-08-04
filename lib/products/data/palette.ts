@@ -7,7 +7,7 @@ export const palette: Product = {
   category: 'Puzzle Game',
   categoryColor: 'bg-slate-700',
   image: '/palette-filled-game.png',
-  imageAlt: 'Screenshot of Pallet game showing filled puzzle state',
+  imageAlt: 'Screenshot of a filled Palette puzzle',
   url: '/palette',
   features: [
     'Fresh puzzles daily (I don\'t sleep, I generate puzzles)',
