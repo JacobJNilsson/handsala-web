@@ -191,11 +191,33 @@ export default function ClaspAnimation({
     // scene box, so the hands start outside the browser window
     let start = 720
     if (overshoot && svgRef.current) {
-      const rect = svgRef.current.getBoundingClientRect()
+      // one frame, so the parked transforms are applied before measuring
+      await new Promise(requestAnimationFrame)
+      if (!alive()) return
+      const svg = svgRef.current
+      const rect = svg.getBoundingClientRect()
       if (rect.width > 0) {
         const scale = rect.width / 1024
         const overhang = Math.max(rect.left, window.innerWidth - rect.right, 0) / scale
         start = 720 + overhang + 40
+        /* The estimate above can leave a stretched fingertip or an arm
+           cap inside the view on wide windows, so the hands pop into
+           sight on the first frame. Measure every hand layer where it
+           stands now and pull start in only as far as keeps every
+           layer outside the viewport. The measured rect covers the
+           path geometry only; the round stroke caps paint half a
+           stroke width beyond it, so the margin must cover that. */
+        const margin = 8 + (STROKE_WIDTH / 2) * scale
+        const vw = window.innerWidth
+        for (const g of svg.querySelectorAll(":scope > g > g")) {
+          const r = g.getBoundingClientRect()
+          if (r.width === 0) continue
+          if (r.right < vw / 2) {
+            start = Math.max(start, -xL.get() + (r.right + margin) / scale)
+          } else if (r.left > vw / 2) {
+            start = Math.max(start, xR.get() + (vw + margin - r.left) / scale)
+          }
+        }
       }
     }
     xL.set(-start)
