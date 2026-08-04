@@ -3,16 +3,15 @@ import { Product } from '../types';
 export const companyreport: Product = {
   id: 'companyreport',
   title: 'Company Report',
-  description: 'Currently a landing page for testing market interest in comprehensive company analysis. The vision is to provide detailed insights about any company\'s business model, competitive positioning, and financial performance without the hours of research. Perfect for investors, consultants, and anyone who needs to understand companies quickly and thoroughly.',
+  description: 'The vision: any company\'s business model, positioning, and financials without the hours of research. The landing page tested the market. Paused, not abandoned.',
   category: 'Business Intelligence',
   categoryColor: 'bg-slate-800',
   image: '/images/blog/company-report.png',
   imageAlt: 'An illustrated hand passes a paper report to another hand',
   url: 'https://companyreport.ai',
   features: [
-    'Testing market demand for automated company analysis',
-    'Collecting feedback on desired features and insights',
-    'Building towards comprehensive business intelligence platform'
+    'Tested market demand for automated company analysis',
+    'The landing page is still live'
   ],
   technologies: [
     { name: 'Next.js', color: 'text-slate-700' },
