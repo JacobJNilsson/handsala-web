@@ -40,11 +40,11 @@ export default function HeroSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mb-16 flex flex-wrap items-baseline justify-between gap-2 border-t border-vellum/15 pt-4 text-[11px] font-medium uppercase tracking-[0.25em] text-vellum/60"
+          className="mb-16 flex flex-wrap items-baseline justify-between gap-2 border-t border-vellum/15 pt-4 text-[11px] font-medium uppercase tracking-[0.25em] text-vellum/60 sm:grid sm:grid-cols-3"
         >
           <span>Handsala AB</span>
-          <span>Gothenburg, Sweden</span>
-          <span className="hidden sm:inline">Developer &amp; builder</span>
+          <span className="sm:text-center">Gothenburg, Sweden</span>
+          <span className="hidden sm:block sm:justify-self-end">Developer &amp; builder</span>
         </motion.div>
 
         {/* The name */}
