@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Palette - Puzzle Game | Handsala',
-  description: 'A challenging and beautiful puzzle game. What if Sudoku and coloring books had a baby? Available on iOS web and Android Play Store.',
+  description: 'A challenging and beautiful puzzle game. What if Sudoku and coloring books had a baby? Play it in the browser or get it on Google Play.',
   openGraph: {
     title: 'Palette - Puzzle Game',
     description: 'A challenging and beautiful puzzle game combining Sudoku and coloring.',
