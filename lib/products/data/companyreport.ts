@@ -2,7 +2,7 @@ import { Product } from '../types';
 
 export const companyreport: Product = {
   id: 'companyreport',
-  title: 'CompanyReport.ai',
+  title: 'Company Report',
   description: 'Currently a landing page for testing market interest in comprehensive company analysis. The vision is to provide detailed insights about any company\'s business model, competitive positioning, and financial performance without the hours of research. Perfect for investors, consultants, and anyone who needs to understand companies quickly and thoroughly.',
   category: 'Business Intelligence',
   categoryColor: 'bg-slate-800',
