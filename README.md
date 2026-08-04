@@ -6,7 +6,7 @@ The official web platform for Handsala, built with Next.js.
 
 The site is hosted on [Sevalla](https://sevalla.com) (static site hosting) with [Cloudflare](https://cloudflare.com) as the DNS/proxy layer.
 
-- **Sevalla** auto-deploys from the `palette` branch on push, running `npm run build` and serving the `out/` directory.
+- **Sevalla** auto-deploys from the `main` branch on push, running `npm run build` and serving the `out/` directory.
 - **Cloudflare** provides DNS, CDN caching, and edge features. Note: Cloudflare Rocket Loader is active and must be kept disabled for Flutter scripts via `data-cfasync="false"` attributes in `public/palette/play/index.html`.
 
 ### Palette (Flutter Web App)
@@ -15,7 +15,7 @@ The Palette puzzle game is a Flutter web app deployed as static files under `pub
 
 1. In the `palette` repo, run `./deploy_to_nextjs.sh ../handsala-web`
 2. Commit and push the updated files in this repo
-3. Sevalla auto-deploys on push to the configured branch
+3. Sevalla auto-deploys on push to `main`
 
 See the [palette repo](https://github.com/JacobJNilsson/palette) for build details.
 
