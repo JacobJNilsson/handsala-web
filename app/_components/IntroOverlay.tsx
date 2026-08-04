@@ -71,8 +71,53 @@ export default function IntroOverlay() {
     const overhang = Math.max(0, (vw - boxW) / 2 / (boxW / 1024))
     setArmExtend(overhang + 126)
     setPlay(true)
+    /* A scroll gesture lifts the overlay in phase with the gesture,
+       like a curtain. The page below stays locked until the overlay
+       is gone, so the visitor always lands on the hero. A short
+       gesture falls back; a pull past the commit point completes. */
+    let lift = 0
+    let settle: number | undefined
+    const applyLift = (delta: number) => {
+      if (finished.current) return
+      lift = Math.min(Math.max(lift + delta, 0), window.innerHeight)
+      overlayY.set(-lift)
+      window.clearTimeout(settle)
+      if (lift >= window.innerHeight) {
+        finish.current(true)
+        return
+      }
+      settle = window.setTimeout(() => {
+        if (finished.current || lift === 0) return
+        if (lift >= window.innerHeight * 0.2) {
+          finish.current(true)
+        } else {
+          animate(overlayY, 0, { duration: 0.3, ease: [0.22, 1, 0.36, 1] })
+          lift = 0
+        }
+      }, 180)
+    }
+    const onWheel = (e: WheelEvent) => applyLift(e.deltaY)
+    let touchY: number | null = null
+    const onTouchStart = (e: TouchEvent) => {
+      touchY = e.touches[0].clientY
+    }
+    const onTouchMove = (e: TouchEvent) => {
+      if (touchY === null) {
+        touchY = e.touches[0].clientY
+        return
+      }
+      applyLift(touchY - e.touches[0].clientY)
+      touchY = e.touches[0].clientY
+    }
+    window.addEventListener("wheel", onWheel, { passive: true })
+    window.addEventListener("touchstart", onTouchStart, { passive: true })
+    window.addEventListener("touchmove", onTouchMove, { passive: true })
     return () => {
       document.body.style.overflow = ""
+      window.clearTimeout(settle)
+      window.removeEventListener("wheel", onWheel)
+      window.removeEventListener("touchstart", onTouchStart)
+      window.removeEventListener("touchmove", onTouchMove)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
