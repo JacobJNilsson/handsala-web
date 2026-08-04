@@ -7,7 +7,7 @@ export const companyreport: Product = {
   category: 'Business Intelligence',
   categoryColor: 'bg-slate-800',
   image: '/images/blog/company-report.png',
-  imageAlt: 'CompanyReport.ai landing page screenshot',
+  imageAlt: 'An illustrated hand passes a paper report to another hand',
   url: 'https://companyreport.ai',
   features: [
     'Testing market demand for automated company analysis',
