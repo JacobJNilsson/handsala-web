@@ -30,6 +30,7 @@ const robotoMono = Roboto_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://handsala.com'),
   title: "Handsala AB",
   description: "Let's shake on it",
   icons: [
