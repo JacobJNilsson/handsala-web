@@ -81,8 +81,8 @@ export default function ContactSection() {
           <div className="grid gap-12 md:grid-cols-12">
             <div className="md:col-span-5">
               <p className="max-w-prose text-lg font-light leading-relaxed text-vellum/90">
-                Always open to new projects, creative ideas, and opportunities to be part of your
-                visions. Based in Gothenburg, available for remote work, and reachable below.
+                I&apos;m open for new projects and odd ideas. Based in Gothenburg, working
+                remotely, one message away.
               </p>
             </div>
 
