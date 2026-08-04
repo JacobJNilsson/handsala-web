@@ -31,8 +31,15 @@ const robotoMono = Roboto_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://handsala.com'),
-  title: "Handsala AB",
-  description: "Let's shake on it",
+  title: "Handsala — Jacob Nilsson, developer in Gothenburg",
+  description:
+    "The company site of Jacob Nilsson, Handsala AB: selected work, a blog, and a handshake. Based in Gothenburg, open for remote work.",
+  openGraph: {
+    title: "Handsala — Jacob Nilsson, developer in Gothenburg",
+    description:
+      "The company site of Jacob Nilsson, Handsala AB: selected work, a blog, and a handshake. Based in Gothenburg, open for remote work.",
+    images: ['/handshake-mark.png'],
+  },
   icons: [
     {
       rel: 'icon',
