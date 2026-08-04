@@ -7,7 +7,6 @@ import HandshakeClasp from "./HandshakeClasp"
 const SHAKE_KEY = "handsala-handshakes"
 
 export default function ContactSection() {
-  const [copyFeedback, setCopyFeedback] = useState("")
   const [shakes, setShakes] = useState<number | null>(null)
   const [playSignal, setPlaySignal] = useState(0)
   const headingRef = useRef<HTMLHeadingElement>(null)
@@ -30,16 +29,6 @@ export default function ContactSection() {
       window.localStorage.setItem(SHAKE_KEY, String(next))
       return next
     })
-  }
-
-  const handleCopyPhone = async () => {
-    try {
-      await navigator.clipboard.writeText("+46722428245")
-      setCopyFeedback("copied")
-    } catch {
-      setCopyFeedback("copy failed")
-    }
-    setTimeout(() => setCopyFeedback(""), 2000)
   }
 
   return (
@@ -95,18 +84,6 @@ export default function ContactSection() {
                 >
                   jacob@handsala.com
                 </a>
-              </p>
-              <p className="flex flex-wrap items-baseline gap-x-6">
-                <span className="w-16 text-[11px] font-medium uppercase tracking-[0.25em] text-vellum/70">Phone</span>
-                <button
-                  onClick={handleCopyPhone}
-                  className="font-display font-medium text-vellum underline decoration-vellum/40 decoration-2 underline-offset-8 transition-colors hover:decoration-vellum"
-                >
-                  +46 722 428 245
-                </button>
-                {copyFeedback && (
-                  <span className="text-xs font-medium uppercase tracking-[0.2em] text-vellum/80">{copyFeedback}</span>
-                )}
               </p>
               <p className="flex flex-wrap items-baseline gap-x-6">
                 <span className="w-16 text-[11px] font-medium uppercase tracking-[0.25em] text-vellum/70">Social</span>
