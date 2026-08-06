@@ -16,7 +16,7 @@ I am now building an ingestion engine called Knyta, which is Swedish for to tie 
 
 ## Where the time went
 
-At my first job I built a CSV ingestion tool, to buy the developers their time back. You wrote the mapping in a config file. You pointed the tool at an S3 bucket. If a file matched the config, the rows landed in our system. After that, the tool ran without us.
+At my first job I built a CSV ingestion tool, to buy the developers their time back. You wrote the mapping in a config file. You pointed the tool at a folder in an S3 bucket. Every file that arrived there became rows in our system. After that, the tool ran without us.
 
 The files still changed. A customer renamed a column, or added one, or moved one. But our support team owned that config, and they could correct it themselves. The fix took minutes, and it never reached a developer. We were happy with that tool for a long time.
 
