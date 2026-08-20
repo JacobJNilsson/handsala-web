@@ -21,7 +21,7 @@ class SeededRandom {
 }
 
 // Configuration interface
-interface OrganicShapeConfig {
+interface OrganicBlobConfig {
   seed?: number;
   complexity?: number;
   roughness?: number;
@@ -44,7 +44,7 @@ function generateOrganicClipPath({
   style = 'organic',
   contentMargin = 0.15, // Safe area for content
   maxClip = 0.3 // Maximum clipping amount
-}: OrganicShapeConfig = {}): string {
+}: OrganicBlobConfig = {}): string {
 
   const rng = new SeededRandom(seed);
   const points: { x: number; y: number }[] = [];
@@ -81,7 +81,7 @@ function generateOrganicClipPath({
   const safeAreaEnd = 100 - contentMarginPct;
 
   // Base shape size - should be reasonable by default
-  const baseShapeRadius = 40; // Base radius in percentage
+  const baseBlobRadius = 40; // Base radius in percentage
 
   // Generate base control points
   for (let i = 0; i < complexity; i++) {
@@ -94,7 +94,7 @@ function generateOrganicClipPath({
     const radiusVariation = rng.range(1 - config.radiusVariation, 1 + config.radiusVariation);
 
     // Calculate base radius with variations
-    const variationRadius = baseShapeRadius * baseRadius * radiusVariation * asymmetryFactor;
+    const variationRadius = baseBlobRadius * baseRadius * radiusVariation * asymmetryFactor;
 
     // Apply maxClip scaling - this controls how much the shape can extend
     const finalRadius = variationRadius * (0.5 + maxClip * 0.5); // Scale from 50% to 100% based on maxClip
@@ -192,11 +192,11 @@ const ORGANIC_PRESETS = {
 };
 
 // React Hook for Organic Shapes
-function useOrganicShape(config: OrganicShapeConfig = {}) {
+function useOrganicBlob(config: OrganicBlobConfig = {}) {
   const [clipPath, setClipPath] = useState('');
   const [currentSeed, setCurrentSeed] = useState(config.seed || 12345);
 
-  const generateShape = useCallback((newConfig: OrganicShapeConfig = {}) => {
+  const generateBlob = useCallback((newConfig: OrganicBlobConfig = {}) => {
     const mergedConfig = { ...config, ...newConfig, seed: currentSeed };
     console.log('Generating shape with config:', mergedConfig);
     const path = generateOrganicClipPath(mergedConfig);
@@ -207,12 +207,12 @@ function useOrganicShape(config: OrganicShapeConfig = {}) {
   const regenerate = useCallback((newSeed?: number) => {
     const seed = newSeed || Math.floor(Math.random() * 1000000);
     setCurrentSeed(seed);
-    return generateShape({ seed });
-  }, [generateShape]);
+    return generateBlob({ seed });
+  }, [generateBlob]);
 
   // Regenerate when config changes
   useEffect(() => {
-    generateShape();
+    generateBlob();
   }, [config.contentMargin, config.maxClip, config.complexity, config.roughness, config.roundness, config.asymmetry, config.baseRadius, config.style, currentSeed]);
 
   return { clipPath, regenerate, currentSeed };
@@ -230,7 +230,7 @@ const OrganicCard = ({
   children: React.ReactNode;
   preset?: keyof typeof ORGANIC_PRESETS;
   seed?: number;
-  customConfig?: OrganicShapeConfig;
+  customConfig?: OrganicBlobConfig;
   className?: string;
   style?: React.CSSProperties;
 }) => {
@@ -240,7 +240,7 @@ const OrganicCard = ({
     ...(seed && { seed })
   };
 
-  const { clipPath } = useOrganicShape(config);
+  const { clipPath } = useOrganicBlob(config);
 
   return (
     <div
@@ -273,7 +273,7 @@ const OrganicButton = ({
   children: React.ReactNode;
   preset?: keyof typeof ORGANIC_PRESETS;
   seed?: number;
-  customConfig?: OrganicShapeConfig;
+  customConfig?: OrganicBlobConfig;
   onClick?: () => void;
   className?: string;
   style?: React.CSSProperties;
@@ -284,7 +284,7 @@ const OrganicButton = ({
     ...(seed && { seed })
   };
 
-  const { clipPath } = useOrganicShape(config);
+  const { clipPath } = useOrganicBlob(config);
 
   return (
     <button
@@ -325,7 +325,7 @@ export default function PaperPage() {
   const [maxClip, setMaxClip] = useState(0.7);
   const [showDebugGrid, setShowDebugGrid] = useState(true);
 
-  const regenerateShapes = () => {
+  const regenerateBlobs = () => {
     setCardSeed(Math.floor(Math.random() * 1000000));
     setButtonSeed(Math.floor(Math.random() * 1000000));
   };
@@ -356,6 +356,7 @@ export default function PaperPage() {
                         <select
               value={selectedPreset}
               onChange={(e) => {
+                // SAFETY: the option values below are the ORGANIC_PRESETS keys.
                 const newPreset = e.target.value as keyof typeof ORGANIC_PRESETS;
                 setSelectedPreset(newPreset);
                 setContentMargin(ORGANIC_PRESETS[newPreset].contentMargin);
@@ -370,7 +371,7 @@ export default function PaperPage() {
             </select>
 
             <button
-              onClick={regenerateShapes}
+              onClick={regenerateBlobs}
               className="px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
             >
               Regenerate Shapes
@@ -505,10 +506,13 @@ export default function PaperPage() {
           <div className="text-center">
             <h2 className="text-2xl font-semibold text-white mb-6">Multiple Variations</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {Object.keys(ORGANIC_PRESETS).map((preset, index) => (
+              {Object.keys(ORGANIC_PRESETS).map((preset, index) => {
+                // SAFETY: Object.keys iterates ORGANIC_PRESETS, so each key is a preset name.
+                const presetKey = preset as keyof typeof ORGANIC_PRESETS;
+                return (
                 <OrganicCard
                   key={preset}
-                  preset={preset as keyof typeof ORGANIC_PRESETS}
+                  preset={presetKey}
                   seed={12345 + index * 100}
                   style={{
                     width: '200px',
@@ -526,7 +530,8 @@ export default function PaperPage() {
                     Example {preset} style
                   </p>
                 </OrganicCard>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

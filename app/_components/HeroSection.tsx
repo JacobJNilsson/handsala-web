@@ -4,14 +4,16 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const NAME = "Handsala"
-const RUNES: Record<string, string> = {
-  H: "ᚺ",
-  A: "ᚨ",
-  N: "ᚾ",
-  D: "ᛞ",
-  S: "ᛊ",
-  L: "ᛚ",
-}
+const RUNES = new Map(
+  Object.entries({
+    H: "ᚺ",
+    A: "ᚨ",
+    N: "ᚾ",
+    D: "ᛞ",
+    S: "ᛊ",
+    L: "ᛚ",
+  })
+)
 
 export default function HeroSection() {
   const [hovered, setHovered] = useState<number | null>(null)
@@ -73,7 +75,7 @@ export default function HeroSection() {
                 <span className={isRune ? "invisible" : undefined}>{letter}</span>
                 {isRune && (
                   <span aria-hidden className="absolute left-1/2 top-0 -translate-x-1/2">
-                    {RUNES[letter.toUpperCase()]}
+                    {RUNES.get(letter.toUpperCase())}
                   </span>
                 )}
               </motion.button>

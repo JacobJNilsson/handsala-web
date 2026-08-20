@@ -49,15 +49,14 @@ export function getAllPostsSync(): BlogPost[] {
   // Function to recursively get markdown files from directories
   const getMarkdownFiles = (dir: string, baseDir = ''): string[] => {
     const dirents = fs.readdirSync(dir, { withFileTypes: true });
-    const files = dirents.map((dirent) => {
+    return dirents.flatMap((dirent) => {
       const res = path.join(dir, dirent.name);
       const relativePath = path.join(baseDir, dirent.name);
       if (dirent.isDirectory()) {
         return getMarkdownFiles(res, relativePath);
       }
-      return dirent.name.endsWith('.md') ? relativePath : null;
+      return dirent.name.endsWith('.md') ? [relativePath] : [];
     });
-    return Array.prototype.concat(...files).filter(Boolean) as string[];
   };
 
   // Get all markdown files
