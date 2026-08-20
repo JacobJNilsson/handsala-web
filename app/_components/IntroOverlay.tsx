@@ -6,7 +6,7 @@ import ClaspAnimation from "./ClaspAnimation"
 
 /* The skip check must run before the first paint, or a skipped intro
    still flashes one orange frame. */
-const useBeforePaint = typeof window !== "undefined" ? useLayoutEffect : useEffect
+const useBeforePaint = globalThis.window ? useLayoutEffect : useEffect
 
 /* Module scope: survives route changes, resets on a full page load.
    The intro greets every real entry to the site, but does not replay
@@ -43,6 +43,7 @@ export default function IntroOverlay() {
     // a full page load resets the module flag, so navigation from an
     // own page (for example the blog) must not replay the intro; a
     // reload or a real entry from outside still plays it
+    // SAFETY: entries of type "navigation" are always PerformanceNavigationTiming.
     const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined
     const type = nav?.type ?? "navigate"
     const internal = document.referrer.startsWith(window.location.origin)
