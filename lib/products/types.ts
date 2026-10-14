@@ -7,6 +7,8 @@ export interface Product {
   image: string;
   imageAlt: string;
   url: string;
+  /** The company's product, as opposed to an experiment. Rendered first and labelled. */
+  flagship?: boolean;
   features: string[];
   technologies: Technology[];
 }

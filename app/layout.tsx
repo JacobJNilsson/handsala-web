@@ -33,11 +33,11 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://handsala.com'),
   title: "Handsala — Jacob Nilsson, developer in Gothenburg",
   description:
-    "The company site of Jacob Nilsson, Handsala AB: selected work, a blog, and a handshake. Based in Gothenburg, open for remote work.",
+    "Handsala AB builds and runs Knyta, an AI-assisted data-ingestion engine. The company site of Jacob Nilsson: Knyta, selected work, blog, and handshake. Based in Gothenburg.",
   openGraph: {
     title: "Handsala — Jacob Nilsson, developer in Gothenburg",
     description:
-      "The company site of Jacob Nilsson, Handsala AB: selected work, a blog, and a handshake. Based in Gothenburg, open for remote work.",
+      "Handsala AB builds and runs Knyta, an AI-assisted data-ingestion engine. The company site of Jacob Nilsson: Knyta, selected work, blog, and handshake. Based in Gothenburg.",
     images: ['/handshake-mark.png'],
   },
   icons: [
