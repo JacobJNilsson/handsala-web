@@ -46,7 +46,7 @@ export default function HeroSection() {
         >
           <span>Handsala AB</span>
           <span className="sm:text-center">Gothenburg, Sweden</span>
-          <span className="hidden sm:block sm:justify-self-end">Developer &amp; builder</span>
+          <span className="hidden sm:block sm:justify-self-end">Builds and runs Knyta</span>
         </motion.div>
 
         {/* The name */}
@@ -123,6 +123,19 @@ export default function HeroSection() {
               finds joy in the logic of code and the chaos of the real world. Whether I&apos;m
               debugging in a café or renovating a house in the woods, I&apos;m always building
               something.
+            </p>
+            <p className="mt-4 max-w-prose text-lg font-light leading-relaxed text-vellum/85 sm:text-xl">
+              Handsala AB builds and runs{" "}
+              <a
+                href="https://knyta.net"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-vellum underline decoration-vermillion-bright decoration-2 underline-offset-4 transition-colors hover:text-vermillion-bright"
+              >
+                Knyta
+              </a>
+              , an AI-assisted data-ingestion engine that turns the files other people send you into
+              clean rows in your database.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <a

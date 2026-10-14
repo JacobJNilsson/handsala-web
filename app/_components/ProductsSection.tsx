@@ -32,6 +32,7 @@ function IndexNumber({ n }: { n: number }) {
 }
 
 export default function ProductsSection() {
+  const flagships = products.filter((p) => p.flagship).length
   return (
     <section id="products" className="relative z-10 bg-vellum py-24">
       <div className="mx-auto max-w-[90rem] px-6 sm:px-10">
@@ -46,7 +47,7 @@ export default function ProductsSection() {
             Selected <em className="italic">work</em>
           </h2>
           <p className="text-[11px] font-medium uppercase tracking-[0.25em] text-ink-faint">
-            ({String(products.length).padStart(2, "0")}) experiments &amp; applications
+            ({String(flagships).padStart(2, "0")}) product, ({String(products.length - flagships).padStart(2, "0")}) experiments &amp; applications
           </p>
         </motion.div>
 
